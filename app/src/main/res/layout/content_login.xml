@@ -24,7 +24,7 @@
             android:id="@+id/uottawaLogo"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/University_of_Ottawa_Logo"
+            android:src="@drawable/university_of_ottawa_logo"
             android:layout_gravity="center_horizontal" />
 
 

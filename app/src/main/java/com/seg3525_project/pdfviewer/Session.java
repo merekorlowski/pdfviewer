@@ -8,7 +8,9 @@ public class Session {
     private static Session instance = null;
     private User user;
 
-    private Session() {}
+    private Session() {
+        user = new User("Merek Orlowski", "morlo088@uottawa.ca", "Woodlergh");
+    }
 
     public static Session getInstance() {
         if(instance == null)

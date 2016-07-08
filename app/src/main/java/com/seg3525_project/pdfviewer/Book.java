@@ -1,6 +1,7 @@
 package com.seg3525_project.pdfviewer;
 
 import android.graphics.Bitmap;
+import android.graphics.pdf.PdfDocument;
 
 import java.util.Date;
 
@@ -15,14 +16,16 @@ public class Book {
     private String ISBN;
     private String description;
     private Date expiryDate;
+    private String pdf;
 
-    public Book(Bitmap image, String title, String author, String ISBN, String description, Date expiryDate) {
+    public Book(Bitmap image, String title, String author, String ISBN, String description, Date expiryDate, String pdf) {
         this.image = image;
         this.title = title;
         this.author = author;
         this.ISBN = ISBN;
         this.description = description;
         this.expiryDate = expiryDate;
+        this.pdf = pdf;
     }
 
     public Bitmap getImage() {
@@ -71,6 +74,14 @@ public class Book {
 
     public void setExpiryDate(Date expiryDate) {
         this.expiryDate = expiryDate;
+    }
+
+    public String getPdf() {
+        return pdf;
+    }
+
+    public void setPdf(String pdf) {
+        this.pdf = pdf;
     }
 
     public String getRemainingTime() {

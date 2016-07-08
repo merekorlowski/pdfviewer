@@ -1,6 +1,12 @@
 package com.seg3525_project.pdfviewer;
 
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Environment;
+
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by merek on 07/07/16.
@@ -10,7 +16,10 @@ public class Library {
     private static Library instance = null;
     private ArrayList<Book> books;
 
-    private Library() {}
+    private Library() {
+        books = new ArrayList<>();
+        books.add(new Book(BitmapFactory.decodeResource(null, R.drawable.stats), "Stats", "Someone", "3434-343-2343-3", "gerfgergergregregerge", new Date(), Environment.getExternalStorageDirectory().getAbsolutePath()+"/stats.pdf"));
+    }
 
     public static Library getInstance() {
         if(instance == null)
@@ -18,7 +27,7 @@ public class Library {
         return instance;
     }
 
-    public ArrayList<Book> getBook() {
+    public ArrayList<Book> getBooks() {
         return books;
     }
 
