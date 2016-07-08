@@ -9,8 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
+
+import java.util.List;
 
 public class CartActivity extends AppCompatActivity {
+
+    private ListView booksInCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +23,9 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        booksInCart = (ListView) findViewById(R.id.booksInCart);
+        booksInCart.setAdapter(new BookInCartAdapter(this, Session.getInstance().getUser().getBooksInCart()));
 
     }
 
@@ -38,8 +46,18 @@ public class CartActivity extends AppCompatActivity {
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;
-            case android.R.id.home:
-                onBackPressed();
+            case R.id.action_browse:
+                intent = new Intent(this, BrowseActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_borrowed_books:
+                intent = new Intent(this, BorrowedBooksActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_cart:
+                intent = new Intent(this, CartActivity.class);
+                startActivity(intent);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

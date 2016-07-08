@@ -6,4 +6,19 @@
         android:title="Log Out"
         android:orderInCategory="100"
         app:showAsAction="never" />
+    <item android:id="@+id/action_browse"
+        android:title="browse"
+        android:icon="@drawable/abc_ic_search_api_material"
+        android:orderInCategory="200"
+        app:showAsAction="always" />
+    <item android:id="@+id/action_borrowed_books"
+        android:title="borrowed books"
+        android:icon="@drawable/ic_import_contacts_white_24dp"
+        android:orderInCategory="300"
+        app:showAsAction="always" />
+    <item android:id="@+id/action_cart"
+        android:title="cart"
+        android:icon="@drawable/ic_shopping_cart_white_24dp"
+        android:orderInCategory="300"
+        app:showAsAction="always" />
 </menu>

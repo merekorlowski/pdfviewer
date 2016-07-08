@@ -64,8 +64,18 @@ public class BorrowedBooksActivity extends AppCompatActivity {
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;
-            case android.R.id.home:
-                onBackPressed();
+            case R.id.action_browse:
+                intent = new Intent(this, BrowseActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_borrowed_books:
+                intent = new Intent(this, BorrowedBooksActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_cart:
+                intent = new Intent(this, CartActivity.class);
+                startActivity(intent);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

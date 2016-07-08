@@ -61,20 +61,33 @@ public class User {
         this.booksInCart = booksInCart;
     }
 
-    public void addBookToCart(Book book) {
+    public boolean addBookToCart(Book book) {
+        for(int i = 0; i < booksInCart.size(); i++) {
+            if(booksInCart.get(i).equals(book))
+                return false;
+        }
+
         booksInCart.add(book);
+        return true;
+
     }
 
-    public void addBookToBorrowedBooks(Book book) {
+    public boolean addBookToBorrowedBooks(Book book) {
+        for(int i = 0; i < borrowedBooks.size(); i++) {
+            if(borrowedBooks.get(i).equals(book))
+                return false;
+        }
+
         borrowedBooks.add(book);
+        return true;
     }
 
     public void removeBookFromCart(Book book) {
-        booksInCart.add(book);
+        booksInCart.remove(book);
     }
 
     public void removeBookFromBorrowedBooks(Book book) {
-        borrowedBooks.add(book);
+        borrowedBooks.remove(book);
     }
 
 }

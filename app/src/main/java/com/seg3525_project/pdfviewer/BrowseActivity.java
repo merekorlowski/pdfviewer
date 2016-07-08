@@ -31,16 +31,7 @@ public class BrowseActivity extends AppCompatActivity {
         addToCart.setColorFilter(new
                 PorterDuffColorFilter(0xFFC24846, PorterDuff.Mode.MULTIPLY));
 
-        cart = (ImageView) findViewById(R.id.cart);
-        cart.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CartActivity.class);
-                startActivity(intent);
-            }
-
-        });
         searchResults = (ListView) findViewById(R.id.searchResults);
         searchResults.setAdapter(new SearchResultsBookAdapter(this, Library.getInstance().getBooks()));
 
@@ -63,8 +54,18 @@ public class BrowseActivity extends AppCompatActivity {
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;
-            case android.R.id.home:
-                onBackPressed();
+            case R.id.action_browse:
+                intent = new Intent(this, BrowseActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_borrowed_books:
+                intent = new Intent(this, BorrowedBooksActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_cart:
+                intent = new Intent(this, CartActivity.class);
+                startActivity(intent);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
