@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -19,19 +20,15 @@ public class BookActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_pdf, menu);
         return true;
     }
 
@@ -41,22 +38,9 @@ public class BookActivity extends AppCompatActivity {
         Intent intent;
 
         switch(item.getItemId()) {
-            case R.id.action_logOut:
-                Session.getInstance().setUser(null);
-                intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
+            case R.id.action_prev:
                 return true;
-            case R.id.action_browse:
-                intent = new Intent(this, BrowseActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.action_borrowed_books:
-                intent = new Intent(this, BorrowedBooksActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.action_cart:
-                intent = new Intent(this, CartActivity.class);
-                startActivity(intent);
+            case R.id.action_next:
                 return true;
             case android.R.id.home:
                 onBackPressed();

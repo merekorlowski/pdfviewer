@@ -37,10 +37,13 @@ public class BorrowedBooksActivity extends AppCompatActivity {
 
                 Book book = Session.getInstance().getUser().getBorrowedBooks().get(position);
 
-                File file = new File(book.getPdf());
+                /*File file = new File(book.getPdf());
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setDataAndType(Uri.fromFile(file), "application/pdf");
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);*/
+
+                Intent intent = new Intent(getApplicationContext(), BookActivity.class);
                 startActivity(intent);
 
             }

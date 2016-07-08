@@ -15,10 +15,19 @@ public class Library {
 
     private static Library instance = null;
     private ArrayList<Book> books;
+    private ArrayList<User> users;
 
     private Library() {
         books = new ArrayList<>();
-        books.add(new Book(R.drawable.stats, "Stats", "Someone", "3434-343-2343-3", "gerfgergergregregerge", "/app/res/pdf/stats.pdf"));
+        books.add(new Book(R.drawable.stats,
+                "Essentials of Probability & Statistics for Engineers & Scientists",
+                "Ronald E. Walpole",
+                "0-321-78373-5",
+                "",
+                "/app/res/pdf/stats.pdf"));
+
+        users = new ArrayList<>();
+
     }
 
     public static Library getInstance() {
@@ -29,6 +38,23 @@ public class Library {
 
     public ArrayList<Book> getBooks() {
         return books;
+    }
+
+    public ArrayList<User> getUsers() { return users; }
+
+    public boolean addUser(User user) {
+
+        boolean exists = false;
+        for(int i = 0; i < users.size(); i++) {
+            if(users.get(i).getEmail().matches(user.getEmail()))
+                exists = true;
+        }
+
+        if(!exists)
+            users.add(user);
+
+        return exists;
+
     }
 
 }

@@ -112,7 +112,7 @@
                 android:textSize="20dp"
                 android:layout_marginLeft="5dp"
                 android:textColor="@color/colorPrimary"
-                android:onClick="signUp" />
+                android:onClick="createAccount" />
         </LinearLayout>
     </LinearLayout>
 
