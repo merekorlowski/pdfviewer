@@ -6,4 +6,6 @@
     <string name="title_activity_ook">ook</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_cart">CartActivity</string>
+    <string name="title_activity_borrowed_books">BorrowedBooksActivity</string>
+    <string name="title_activity_create_account">CreateAccountActivity</string>
 </resources>

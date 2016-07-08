@@ -29,6 +29,14 @@
         <activity
             android:name=".CartActivity"
             android:label="@string/title_activity_cart"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BorrowedBooksActivity"
+            android:label="@string/title_activity_borrowed_books"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CreateAccountActivity"
+            android:label="@string/title_activity_create_account"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
