@@ -68,6 +68,8 @@ public class CartActivity extends AppCompatActivity {
         User user = Session.getInstance().getUser();
         user.addBooksToBorrowedBooks(user.getBooksInCart());
         user.setBooksInCart(new ArrayList<Book>());
+        Intent intent = new Intent(this, BorrowedBooksActivity.class);
+        startActivity(intent);
     }
 
 

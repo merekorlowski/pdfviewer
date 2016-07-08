@@ -1,6 +1,7 @@
 package com.seg3525_project.pdfviewer;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.graphics.pdf.PdfDocument;
 
 import java.util.Date;
@@ -10,7 +11,7 @@ import java.util.Date;
  */
 public class Book {
 
-    private Bitmap image;
+    private int image;
     private String title;
     private String author;
     private String ISBN;
@@ -18,21 +19,22 @@ public class Book {
     private Date expiryDate;
     private String pdf;
 
-    public Book(Bitmap image, String title, String author, String ISBN, String description, Date expiryDate, String pdf) {
+    public Book(int image, String title, String author, String ISBN, String description, String pdf) {
         this.image = image;
         this.title = title;
         this.author = author;
         this.ISBN = ISBN;
         this.description = description;
-        this.expiryDate = expiryDate;
         this.pdf = pdf;
+        expiryDate = new Date();
+        expiryDate.setTime(expiryDate.getTime() + 15 * 24 * 60 * 60 * 1000);
     }
 
-    public Bitmap getImage() {
+    public int getImage() {
         return image;
     }
 
-    public void setImage(Bitmap image) {
+    public void setImage(int image) {
         this.image = image;
     }
 
@@ -90,11 +92,11 @@ public class Book {
 
         long difference = expiryDateInMilliseconds - nowInMilliseconds;
         if(difference / (1000 * 60 * 60 * 24) > 0)
-            return Math.round(difference / (60000 * 24)) + " days left";
+            return Math.round(difference / (1000 * 60 * 60 * 24)) + " Days left";
         else if(difference / (1000 * 60 * 60) > 0)
-            return Math.round(difference / (1000 * 60 * 60)) + " hours left";
+            return Math.round(difference / (1000 * 60 * 60)) + " Hours left";
         else
-            return Math.round(difference / (1000 * 60)) + " minutes left";
+            return Math.round(difference / (1000 * 60)) + " Minutes left";
 
     }
 

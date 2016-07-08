@@ -32,7 +32,7 @@ public class BookInCartAdapter extends ArrayAdapter<Book> {
         TextView bookISBN = (TextView) convertView.findViewById(R.id.bookISBN);
         ImageView removeFromCart = (ImageView) convertView.findViewById(R.id.removeFromCart);
 
-        bookImage.setImageBitmap(book.getImage());
+        bookImage.setImageResource(book.getImage());
         bookTitle.setText(book.getTitle());
         bookAuthor.setText("by " + book.getAuthor());
         bookISBN.setText("ISBN: " + book.getISBN());

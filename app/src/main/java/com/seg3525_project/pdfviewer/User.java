@@ -76,15 +76,15 @@ public class User {
 
         boolean exists = false;
 
-        for(int i = 0; i < borrowedBooks.size(); i++) {
-            for(int j = 0; j < books.size(); j++) {
+        for(int i = 0; i < books.size(); i++) {
+           /* for(int j = 0; j < books.size(); j++) {
                 if(borrowedBooks.get(i).equals(books.get(j))) {
                     exists = true;
                     break;
-                } else {
-                    borrowedBooks.add(books.get(j));
-                }
-            }
+                } else {*/
+                    borrowedBooks.add(books.get(i));
+                /*}
+            }*/
 
         }
 

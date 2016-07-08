@@ -18,7 +18,7 @@ public class Library {
 
     private Library() {
         books = new ArrayList<>();
-        books.add(new Book(BitmapFactory.decodeResource(null, R.drawable.stats), "Stats", "Someone", "3434-343-2343-3", "gerfgergergregregerge", new Date(), Environment.getExternalStorageDirectory().getAbsolutePath()+"/stats.pdf"));
+        books.add(new Book(R.drawable.stats, "Stats", "Someone", "3434-343-2343-3", "gerfgergergregregerge", "/app/res/pdf/stats.pdf"));
     }
 
     public static Library getInstance() {
