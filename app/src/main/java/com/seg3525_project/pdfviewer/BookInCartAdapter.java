@@ -13,8 +13,8 @@ import java.util.ArrayList;
 /**
  * Created by merek on 07/07/16.
  */
-public class SearchResultsBookAdapter extends ArrayAdapter<Book> {
-    public SearchResultsBookAdapter(Context context, ArrayList<Book> books) {
+public class BookInCartAdapter extends ArrayAdapter<Book> {
+    public BookInCartAdapter(Context context, ArrayList<Book> books) {
         super(context, 0, books);
     }
 
@@ -24,24 +24,25 @@ public class SearchResultsBookAdapter extends ArrayAdapter<Book> {
         final Book book = getItem(position);
 
         if (convertView == null)
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.search_results_book, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.cart_book, parent, false);
 
         ImageView bookImage = (ImageView) convertView.findViewById(R.id.bookImage);
         TextView bookTitle = (TextView) convertView.findViewById(R.id.bookTitle);
         TextView bookAuthor = (TextView) convertView.findViewById(R.id.bookAuthor);
         TextView bookISBN = (TextView) convertView.findViewById(R.id.bookISBN);
-        ImageView addToCart = (ImageView) convertView.findViewById(R.id.addToCart);
+        ImageView removeFromCart = (ImageView) convertView.findViewById(R.id.removeFromCart);
 
         bookImage.setImageBitmap(book.getImage());
         bookTitle.setText(book.getTitle());
         bookAuthor.setText("by " + book.getAuthor());
         bookISBN.setText("ISBN: " + book.getISBN());
 
-        addToCart.setOnClickListener(new View.OnClickListener() {
+        removeFromCart.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                Session.getInstance().getUser().addBookToCart(book);
+                Session.getInstance().getUser().removeBookFromCart(book);
+                notifyDataSetChanged();
             }
 
         });

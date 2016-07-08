@@ -11,7 +11,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="125dp"
-            android:id="@+id/imageView" />
+            android:id="@+id/bookImage" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -24,21 +24,21 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Title"
-                android:id="@+id/textView" />
+                android:id="@+id/bookTitle" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Author"
-                android:id="@+id/textView3" />
+                android:id="@+id/bookAuthor" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="ISBN"
-                android:id="@+id/textView4" />
+                android:id="@+id/bookISBN" />
         </LinearLayout>
 
         <LinearLayout
