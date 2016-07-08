@@ -29,6 +29,7 @@ public class BorrowedBooksActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         borrowedBooks = (ListView) findViewById(R.id.borrowedBooks);
+        borrowedBooks.setAdapter(new BorrowedBookAdapter(this, Session.getInstance().getUser().getBorrowedBooks()));
 
         borrowedBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -72,14 +72,23 @@ public class User {
 
     }
 
-    public boolean addBookToBorrowedBooks(Book book) {
+    public boolean addBooksToBorrowedBooks(ArrayList<Book> books) {
+
+        boolean exists = false;
+
         for(int i = 0; i < borrowedBooks.size(); i++) {
-            if(borrowedBooks.get(i).equals(book))
-                return false;
+            for(int j = 0; j < books.size(); j++) {
+                if(borrowedBooks.get(i).equals(books.get(j))) {
+                    exists = true;
+                    break;
+                } else {
+                    borrowedBooks.add(books.get(j));
+                }
+            }
+
         }
 
-        borrowedBooks.add(book);
-        return true;
+        return exists;
     }
 
     public void removeBookFromCart(Book book) {

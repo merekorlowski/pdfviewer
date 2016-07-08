@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartActivity extends AppCompatActivity {
@@ -61,6 +62,12 @@ public class CartActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void borrowBooks(View view) {
+        User user = Session.getInstance().getUser();
+        user.addBooksToBorrowedBooks(user.getBooksInCart());
+        user.setBooksInCart(new ArrayList<Book>());
     }
 
 
