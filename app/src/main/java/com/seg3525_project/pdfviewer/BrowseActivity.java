@@ -30,8 +30,8 @@ public class BrowseActivity extends AppCompatActivity {
         ArrayList<Book> displayedBooks = new ArrayList<>();
 
         if(books.size() == 0) {
-            books.add(new Book(((BitmapDrawable) getResources().getDrawable(R.drawable.stats)).getBitmap(),
-                    "nobody",
+            books.add(new Book("nobody",
+                    ((BitmapDrawable) getResources().getDrawable(R.drawable.stats)).getBitmap(),
                     "Essentials of Probability & Statistics for Engineers & Scientists",
                     "Ronald E. Walpole",
                     "0-321-78373-5",
