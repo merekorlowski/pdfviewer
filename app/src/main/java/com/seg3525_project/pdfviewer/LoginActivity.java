@@ -1,6 +1,7 @@
 package com.seg3525_project.pdfviewer;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -40,16 +41,21 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login(View view) {
 
-        ArrayList<User> users = Library.getInstance().getUsers();
+        DBHelper dbHelper = new DBHelper(this);
+        Cursor cursor = dbHelper.getUsers();
         User user = null;
 
-        for(int i = 0; i < users.size(); i++) {
-            if(users.get(i).getEmail().matches(email.getText().toString())
-                    && users.get(i).getPassword().matches(password.getText().toString())) {
-                user = users.get(i);
+        cursor.moveToFirst();
+        while(cursor.moveToNext()) {
+            if(cursor.getString(1).equals(email.getText().toString())
+                    && cursor.getString(2).equals(password.getText().toString())) {
+                user = new User(
+                        cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getString(2)
+                );
                 break;
             }
-
         }
 
         if(user != null) {

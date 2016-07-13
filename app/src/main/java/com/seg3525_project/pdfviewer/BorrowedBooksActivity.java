@@ -1,11 +1,11 @@
 package com.seg3525_project.pdfviewer;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -15,6 +15,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BorrowedBooksActivity extends AppCompatActivity {
@@ -28,14 +30,35 @@ public class BorrowedBooksActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        DBHelper dbHelper = new DBHelper(this);
+        Cursor cursor = dbHelper.getBooks();
+        final ArrayList<Book> books = new ArrayList<>();
+
+        cursor.moveToFirst();
+        while(cursor.moveToNext()) {
+            if(cursor.getString(1).equals(Session.getInstance().getUser().getEmail())) {
+                books.add(new Book(
+                        cursor.getLong(0),
+                        cursor.getString(1),
+                        BitmapUtility.getImage(cursor.getBlob(2)),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getString(7),
+                        new Date(cursor.getString(8))
+                ));
+            }
+        }
+
         borrowedBooks = (ListView) findViewById(R.id.borrowedBooks);
-        borrowedBooks.setAdapter(new BorrowedBookAdapter(this, Session.getInstance().getUser().getBorrowedBooks()));
+        borrowedBooks.setAdapter(new BorrowedBookAdapter(this, books));
 
         borrowedBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Book book = Session.getInstance().getUser().getBorrowedBooks().get(position);
+                Book book = books.get(position);
 
                 /*File file = new File(book.getPdf());
                 Intent intent = new Intent(Intent.ACTION_VIEW);

@@ -3,22 +3,21 @@ package com.seg3525_project.pdfviewer;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class BrowseActivity extends AppCompatActivity {
 
     private ListView searchResults;
-    private ImageView cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +26,26 @@ public class BrowseActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Drawable addToCart = getResources().getDrawable(R.drawable.ic_add_shopping_cart_white_24dp);
-        addToCart.setColorFilter(new
-                PorterDuffColorFilter(0xFFC24846, PorterDuff.Mode.MULTIPLY));
+        ArrayList<Book> books = new ArrayList<>();
+        ArrayList<Book> displayedBooks = new ArrayList<>();
 
+        if(books.size() == 0) {
+            books.add(new Book(((BitmapDrawable) getResources().getDrawable(R.drawable.stats)).getBitmap(),
+                    "nobody",
+                    "Essentials of Probability & Statistics for Engineers & Scientists",
+                    "Ronald E. Walpole",
+                    "0-321-78373-5",
+                    "",
+                    "/app/res/pdf/stats.pdf"));
+        }
+
+        for(int i = 0; i < books.size(); i++) {
+            if(books.get(i).getBorrower().equals("nobody"))
+                displayedBooks.add(books.get(i));
+        }
 
         searchResults = (ListView) findViewById(R.id.searchResults);
-        searchResults.setAdapter(new SearchResultsBookAdapter(this, Library.getInstance().getBooks()));
+        searchResults.setAdapter(new SearchResultsBookAdapter(this, displayedBooks));
 
     }
 

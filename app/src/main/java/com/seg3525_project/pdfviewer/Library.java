@@ -19,13 +19,6 @@ public class Library {
 
     private Library() {
         books = new ArrayList<>();
-        books.add(new Book(R.drawable.stats,
-                "Essentials of Probability & Statistics for Engineers & Scientists",
-                "Ronald E. Walpole",
-                "0-321-78373-5",
-                "",
-                "/app/res/pdf/stats.pdf"));
-
         users = new ArrayList<>();
 
     }

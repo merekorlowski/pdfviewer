@@ -32,7 +32,7 @@ public class BorrowedBookAdapter extends ArrayAdapter<Book> {
         TextView bookISBN = (TextView) convertView.findViewById(R.id.bookISBN);
         TextView timeLeft = (TextView) convertView.findViewById(R.id.timeLeft);
 
-        bookImage.setImageResource(book.getImage());
+        bookImage.setImageBitmap(book.getImage());
         bookTitle.setText(book.getTitle());
         bookAuthor.setText("by " + book.getAuthor());
         bookISBN.setText("ISBN: " + book.getISBN());

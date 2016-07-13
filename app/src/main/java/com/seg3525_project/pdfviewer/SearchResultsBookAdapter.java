@@ -34,7 +34,7 @@ public class SearchResultsBookAdapter extends ArrayAdapter<Book> {
         TextView bookISBN = (TextView) convertView.findViewById(R.id.bookISBN);
         ImageView addToCart = (ImageView) convertView.findViewById(R.id.addToCart);
 
-        bookImage.setImageResource(book.getImage());
+        bookImage.setImageBitmap(book.getImage());
         bookTitle.setText(book.getTitle());
         bookAuthor.setText("by " + book.getAuthor());
         bookISBN.setText("ISBN: " + book.getISBN());
@@ -43,7 +43,10 @@ public class SearchResultsBookAdapter extends ArrayAdapter<Book> {
 
             @Override
             public void onClick(View view) {
-                Session.getInstance().getUser().addBookToCart(book);
+                User user = Session.getInstance().getUser();
+                book.setBorrower(user.getEmail());
+                user.addBookToCart(book);
+                remove(book);
             }
 
         });

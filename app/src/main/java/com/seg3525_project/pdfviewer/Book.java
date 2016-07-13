@@ -11,7 +11,9 @@ import java.util.Date;
  */
 public class Book {
 
-    private int image;
+    private long id;
+    private String borrower;
+    private Bitmap image;
     private String title;
     private String author;
     private String ISBN;
@@ -19,7 +21,9 @@ public class Book {
     private Date expiryDate;
     private String pdf;
 
-    public Book(int image, String title, String author, String ISBN, String description, String pdf) {
+    public Book(String borrower, Bitmap image, String title, String author, String ISBN, String description, String pdf) {
+        id = System.currentTimeMillis();
+        this.borrower = borrower;
         this.image = image;
         this.title = title;
         this.author = author;
@@ -30,11 +34,39 @@ public class Book {
         expiryDate.setTime(expiryDate.getTime() + 15 * 24 * 60 * 60 * 1000);
     }
 
-    public int getImage() {
+    public Book(long id, String borrower, Bitmap image, String title, String author, String ISBN, String description, String pdf, Date expiryDate) {
+        this.id = id;
+        this.borrower = borrower;
+        this.image = image;
+        this.title = title;
+        this.author = author;
+        this.ISBN = ISBN;
+        this.description = description;
+        this.pdf = pdf;
+        this.expiryDate = expiryDate;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getBorrower() {
+        return borrower;
+    }
+
+    public void setBorrower(String borrower) {
+        this.borrower = borrower;
+    }
+
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
 

@@ -1,6 +1,8 @@
 package com.seg3525_project.pdfviewer;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -47,14 +49,26 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     public void createAccount(View view) {
-        if(validateFullName() && validateEmail() && validatePassword() && validateConfirmPassword()) {
-            boolean exists = Library.getInstance().addUser(new User(
-                    fullName.getText().toString(),
-                    email.getText().toString(),
-                    password.getText().toString()
-            ));
+        DBHelper dbHelper = new DBHelper(this);
+        Cursor cursor = dbHelper.getUsers();
+        cursor.moveToFirst();
 
+        boolean exists = false;
+
+        while(cursor.moveToNext()) {
+            if(cursor.getString(1).equals(email.getText().toString()))
+                exists = true;
+        }
+
+        if(validateFullName() && validateEmail() && validatePassword() && validateConfirmPassword()) {
             if(!exists) {
+
+                dbHelper.addUser(new User(
+                        fullName.getText().toString(),
+                        email.getText().toString(),
+                        password.getText().toString()
+                ));
+
                 Toast.makeText(CreateAccountActivity.this, "Account created.", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, LoginActivity.class);
                 intent.putExtra("email", email.getText().toString());
