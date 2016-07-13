@@ -15,7 +15,7 @@ import com.seg3525_project.pdfviewer.TableInfo.*;
 public class DBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "pdfviewer.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
     public String CREATE_USER_TABLE = "CREATE TABLE " + UserInfo.TABLE_NAME + "(" +
             UserInfo.FULL_NAME + " TEXT, " +
@@ -29,6 +29,8 @@ public class DBHelper extends SQLiteOpenHelper {
             BookInfo.TITLE + " TEXT, " +
             BookInfo.AUTHOR + " TEXT, " +
             BookInfo.ISBN + " TEXT, " +
+            BookInfo.DESCRIPTION + " TEXT, " +
+            BookInfo.PDF + " TEXT, " +
             BookInfo.EXPIRY_DATE + " TEXT);";
 
 
@@ -86,7 +88,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(user.getEmail())});
     }
 
-    public void addMyBook(Book book) {
+    public void addBook(Book book) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -96,6 +98,8 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(BookInfo.TITLE, book.getTitle());
         contentValues.put(BookInfo.AUTHOR, book.getAuthor());
         contentValues.put(BookInfo.ISBN, book.getISBN());
+        contentValues.put(BookInfo.DESCRIPTION, book.getDescription());
+        contentValues.put(BookInfo.PDF, book.getPdf());
         contentValues.put(BookInfo.EXPIRY_DATE, book.getExpiryDate().toString());
 
         sqLiteDatabase.insert(BookInfo.TABLE_NAME, null, contentValues);
@@ -117,12 +121,14 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(BookInfo.TITLE, book.getTitle());
         contentValues.put(BookInfo.AUTHOR, book.getAuthor());
         contentValues.put(BookInfo.ISBN, book.getISBN());
+        contentValues.put(BookInfo.DESCRIPTION, book.getDescription());
+        contentValues.put(BookInfo.PDF, book.getPdf());
         contentValues.put(BookInfo.EXPIRY_DATE, book.getExpiryDate().toString());
 
         return sqLiteDatabase.update(BookInfo.TABLE_NAME, contentValues, BookInfo.ID + " = " + book.getId(),null);
     }
 
-    public Cursor getMyBooks(String borrower) {
+    public Cursor getBorrowedBooks(String borrower) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         String[] columns = {
                 BookInfo.ID,
@@ -131,6 +137,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 BookInfo.TITLE,
                 BookInfo.AUTHOR,
                 BookInfo.ISBN,
+                BookInfo.DESCRIPTION,
+                BookInfo.PDF,
                 BookInfo.EXPIRY_DATE
         };
 
@@ -146,6 +154,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 BookInfo.TITLE,
                 BookInfo.AUTHOR,
                 BookInfo.ISBN,
+                BookInfo.DESCRIPTION,
+                BookInfo.PDF,
                 BookInfo.EXPIRY_DATE
         };
 
@@ -162,6 +172,8 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(BookInfo.TITLE, book.getTitle());
         contentValues.put(BookInfo.AUTHOR, book.getAuthor());
         contentValues.put(BookInfo.ISBN, book.getISBN());
+        contentValues.put(BookInfo.DESCRIPTION, book.getDescription());
+        contentValues.put(BookInfo.PDF, book.getPdf());
         contentValues.put(BookInfo.EXPIRY_DATE, book.getExpiryDate().toString());
 
         sqLiteDatabase.update(BookInfo.TABLE_NAME, contentValues, BookInfo.ID + " = " + book.getId(), null);
@@ -177,6 +189,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 BookInfo.TITLE,
                 BookInfo.AUTHOR,
                 BookInfo.ISBN,
+                BookInfo.DESCRIPTION,
+                BookInfo.PDF,
                 BookInfo.EXPIRY_DATE
         };
 

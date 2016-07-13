@@ -26,7 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="@android:drawable/editbox_dropdown_light_frame">
+            android:background="@android:drawable/editbox_dropdown_light_frame"
+            android:layout_marginBottom="15dp">
 
             <EditText
                 android:layout_width="match_parent"
@@ -55,6 +56,15 @@
             android:id="@+id/searchResults"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="No results found for your search."
+            android:id="@+id/noResultsFound"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:textSize="20dp" />
 
     </LinearLayout>
 </RelativeLayout>

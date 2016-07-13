@@ -22,6 +22,7 @@ import java.util.List;
 public class BorrowedBooksActivity extends AppCompatActivity {
 
     private ListView borrowedBooks;
+    private ArrayList<Book> books;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class BorrowedBooksActivity extends AppCompatActivity {
 
         DBHelper dbHelper = new DBHelper(this);
         Cursor cursor = dbHelper.getBooks();
-        final ArrayList<Book> books = new ArrayList<>();
+        books = new ArrayList<>();
 
         cursor.moveToFirst();
         while(cursor.moveToNext()) {
@@ -53,7 +54,7 @@ public class BorrowedBooksActivity extends AppCompatActivity {
 
         borrowedBooks = (ListView) findViewById(R.id.borrowedBooks);
         borrowedBooks.setAdapter(new BorrowedBookAdapter(this, books));
-
+        borrowedBooks.setEmptyView(findViewById(R.id.noBooksBorrowed));
         borrowedBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

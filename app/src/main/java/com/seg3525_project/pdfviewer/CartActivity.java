@@ -1,6 +1,7 @@
 package com.seg3525_project.pdfviewer;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +25,7 @@ public class CartActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         booksInCart = (ListView) findViewById(R.id.booksInCart);
+        booksInCart.setEmptyView(findViewById(R.id.noBooksInCart));
         booksInCart.setAdapter(new BookInCartAdapter(this, Session.getInstance().getUser().getBooksInCart()));
 
     }
@@ -64,7 +66,20 @@ public class CartActivity extends AppCompatActivity {
 
     public void borrowBooks(View view) {
         User user = Session.getInstance().getUser();
-        user.addBooksToBorrowedBooks(user.getBooksInCart());
+
+        DBHelper dbHelper = new DBHelper(this);
+        /*Cursor cursor = dbHelper.getBooks();
+
+        cursor.moveToFirst();
+        while(cursor.moveToNext()) {
+
+        }*/
+
+        for(int i = 0; i < user.getBooksInCart().size(); i++) {
+            user.getBooksInCart().get(i).setBorrower(Session.getInstance().getUser().getEmail());
+            dbHelper.addBook(user.getBooksInCart().get(i));
+        }
+
         user.setBooksInCart(new ArrayList<Book>());
         Intent intent = new Intent(this, BorrowedBooksActivity.class);
         startActivity(intent);

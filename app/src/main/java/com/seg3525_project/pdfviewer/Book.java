@@ -31,7 +31,8 @@ public class Book {
         this.description = description;
         this.pdf = pdf;
         expiryDate = new Date();
-        expiryDate.setTime(expiryDate.getTime() + 15 * 24 * 60 * 60 * 1000);
+        //expiryDate.setTime(expiryDate.getTime() + 15 * 24 * 60 * 60 * 1000);
+        expiryDate.setTime(expiryDate.getTime() + 1000 * 60 * 60);
     }
 
     public Book(long id, String borrower, Bitmap image, String title, String author, String ISBN, String description, String pdf, Date expiryDate) {

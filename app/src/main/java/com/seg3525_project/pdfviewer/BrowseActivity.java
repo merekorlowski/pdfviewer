@@ -1,6 +1,7 @@
 package com.seg3525_project.pdfviewer;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.BitmapDrawable;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class BrowseActivity extends AppCompatActivity {
 
@@ -26,25 +28,40 @@ public class BrowseActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ArrayList<Book> books = new ArrayList<>();
+        DBHelper dbHelper = new DBHelper(this);
+        Cursor cursor = dbHelper.getBooks();
         ArrayList<Book> displayedBooks = new ArrayList<>();
 
-        if(books.size() == 0) {
-            books.add(new Book("nobody",
+        if(cursor.getCount() == 0) {
+            dbHelper.addBook(new Book("nobody",
                     ((BitmapDrawable) getResources().getDrawable(R.drawable.stats)).getBitmap(),
                     "Essentials of Probability & Statistics for Engineers & Scientists",
                     "Ronald E. Walpole",
                     "0-321-78373-5",
                     "",
                     "/app/res/pdf/stats.pdf"));
+
         }
 
-        for(int i = 0; i < books.size(); i++) {
-            if(books.get(i).getBorrower().equals("nobody"))
-                displayedBooks.add(books.get(i));
+        cursor.moveToFirst();
+        while(cursor.moveToNext()) {
+            if(cursor.getString(1).equals("nobody"))
+                displayedBooks.add(new Book(
+                                cursor.getLong(0),
+                                cursor.getString(1),
+                                BitmapUtility.getImage(cursor.getBlob(2)),
+                                cursor.getString(3),
+                                cursor.getString(4),
+                                cursor.getString(5),
+                                cursor.getString(6),
+                                cursor.getString(7),
+                                new Date(cursor.getString(8))
+                        )
+                );
         }
 
         searchResults = (ListView) findViewById(R.id.searchResults);
+        searchResults.setEmptyView(findViewById(R.id.noResultsFound));
         searchResults.setAdapter(new SearchResultsBookAdapter(this, displayedBooks));
 
     }

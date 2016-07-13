@@ -47,8 +47,8 @@ public class LoginActivity extends AppCompatActivity {
 
         cursor.moveToFirst();
         while(cursor.moveToNext()) {
-            if(cursor.getString(1).equals(email.getText().toString())
-                    && cursor.getString(2).equals(password.getText().toString())) {
+            if(email.getText().toString().equals(cursor.getString(1))
+                    && password.getText().toString().equals(cursor.getString(2))) {
                 user = new User(
                         cursor.getString(0),
                         cursor.getString(1),

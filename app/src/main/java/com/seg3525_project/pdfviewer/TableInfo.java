@@ -23,6 +23,8 @@ public class TableInfo {
         public static final String TITLE = "title";
         public static final String AUTHOR = "author";
         public static final String ISBN = "ISBN";
+        public static final String DESCRIPTION = "description";
+        public static final String PDF = "pdf";
         public static final String EXPIRY_DATE = "expiry_date";
         public static final String TABLE_NAME = "book_data";
     }
