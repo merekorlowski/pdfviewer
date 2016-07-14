@@ -26,6 +26,15 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="1" />
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="No books in your cart."
+            android:id="@+id/noBooksInCart"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:textSize="20dp" />
+
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -24,6 +24,7 @@ public class CartActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         booksInCart = (ListView) findViewById(R.id.booksInCart);
+        booksInCart.setEmptyView(findViewById(R.id.noBooksInCart));
         booksInCart.setAdapter(new BookInCartAdapter(this, Session.getInstance().getUser().getBooksInCart()));
 
     }
@@ -64,7 +65,23 @@ public class CartActivity extends AppCompatActivity {
 
     public void borrowBooks(View view) {
         User user = Session.getInstance().getUser();
-        user.addBooksToBorrowedBooks(user.getBooksInCart());
+
+        DBHelper dbHelper = new DBHelper(this);
+        /*Cursor cursor = dbHelper.getBooks();
+
+        cursor.moveToFirst();
+        while(cursor.moveToNext()) {
+
+        }*/
+
+        Date expiryDate = new Date();
+        expiryDate.setTime(expiryDate.getTime() + 2 * 1000 * 60);
+        for(int i = 0; i < user.getBooksInCart().size(); i++) {
+            user.getBooksInCart().get(i).setBorrower(Session.getInstance().getUser().getEmail());
+            user.getBooksInCart().get(i).setExpiryDate(expiryDate);
+            dbHelper.addBook(user.getBooksInCart().get(i));
+        }
+
         user.setBooksInCart(new ArrayList<Book>());
         Intent intent = new Intent(this, BorrowedBooksActivity.class);
         startActivity(intent);
