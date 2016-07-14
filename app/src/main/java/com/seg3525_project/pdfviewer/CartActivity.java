@@ -1,7 +1,6 @@
 package com.seg3525_project.pdfviewer;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,7 +10,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -75,8 +74,11 @@ public class CartActivity extends AppCompatActivity {
 
         }*/
 
+        Date expiryDate = new Date();
+        expiryDate.setTime(expiryDate.getTime() + 2 * 1000 * 60);
         for(int i = 0; i < user.getBooksInCart().size(); i++) {
             user.getBooksInCart().get(i).setBorrower(Session.getInstance().getUser().getEmail());
+            user.getBooksInCart().get(i).setExpiryDate(expiryDate);
             dbHelper.addBook(user.getBooksInCart().get(i));
         }
 

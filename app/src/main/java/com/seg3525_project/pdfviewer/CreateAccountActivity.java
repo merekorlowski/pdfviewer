@@ -2,7 +2,6 @@ package com.seg3525_project.pdfviewer;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.seg3525_project.pdfviewer.TableInfo.UserInfo;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
@@ -56,7 +57,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         boolean exists = false;
 
         while(cursor.moveToNext()) {
-            if(cursor.getString(1).equals(email.getText().toString()))
+            if(cursor.getString(UserInfo.EMAIL_COLUMN_NUMBER).equals(email.getText().toString()))
                 exists = true;
         }
 

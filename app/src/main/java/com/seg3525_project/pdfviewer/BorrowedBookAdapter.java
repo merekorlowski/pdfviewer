@@ -31,12 +31,24 @@ public class BorrowedBookAdapter extends ArrayAdapter<Book> {
         TextView bookAuthor = (TextView) convertView.findViewById(R.id.bookAuthor);
         TextView bookISBN = (TextView) convertView.findViewById(R.id.bookISBN);
         TextView timeLeft = (TextView) convertView.findViewById(R.id.timeLeft);
+        ImageView removeBook = (ImageView) convertView.findViewById(R.id.removeBook);
 
         bookImage.setImageBitmap(book.getImage());
         bookTitle.setText(book.getTitle());
         bookAuthor.setText("by " + book.getAuthor());
         bookISBN.setText("ISBN: " + book.getISBN());
         timeLeft.setText(book.getRemainingTime());
+
+        removeBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                remove(book);
+                DBHelper dbHelper = new DBHelper(getContext());
+                book.setBorrower("nobody");
+                dbHelper.updateBook(book);
+                notifyDataSetChanged();
+            }
+        });
 
         return convertView;
     }

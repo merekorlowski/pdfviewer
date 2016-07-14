@@ -10,14 +10,12 @@ public class User {
     private String fullName;
     private String email;
     private String password;
-    private ArrayList<Book> borrowedBooks;
     private ArrayList<Book> booksInCart;
 
     public User(String fullName, String email, String password) {
         this.fullName = fullName;
         this.email = email;
         this.password = password;
-        borrowedBooks = new ArrayList<>();
         booksInCart = new ArrayList<>();
     }
 
@@ -45,14 +43,6 @@ public class User {
         this.password = password;
     }
 
-    public ArrayList<Book> getBorrowedBooks() {
-        return borrowedBooks;
-    }
-
-    public void setBorrowedBooks(ArrayList<Book> borrowedBooks) {
-        this.borrowedBooks = borrowedBooks;
-    }
-
     public ArrayList<Book> getBooksInCart() {
         return booksInCart;
     }
@@ -72,31 +62,8 @@ public class User {
 
     }
 
-    public boolean addBooksToBorrowedBooks(ArrayList<Book> books) {
-
-        boolean exists = false;
-
-        for(int i = 0; i < books.size(); i++) {
-           /* for(int j = 0; j < books.size(); j++) {
-                if(borrowedBooks.get(i).equals(books.get(j))) {
-                    exists = true;
-                    break;
-                } else {*/
-                    borrowedBooks.add(books.get(i));
-                /*}
-            }*/
-
-        }
-
-        return exists;
-    }
-
     public void removeBookFromCart(Book book) {
         booksInCart.remove(book);
-    }
-
-    public void removeBookFromBorrowedBooks(Book book) {
-        borrowedBooks.remove(book);
     }
 
 }

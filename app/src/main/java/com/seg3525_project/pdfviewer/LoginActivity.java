@@ -3,23 +3,22 @@ package com.seg3525_project.pdfviewer;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.seg3525_project.pdfviewer.TableInfo.UserInfo;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private DBHelper dbHelper;
+    private Cursor cursor;
     private EditText email;
     private EditText password;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +27,12 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        dbHelper = new DBHelper(this);
+        cursor = dbHelper.getUsers();
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
 
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
@@ -41,18 +44,18 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login(View view) {
 
-        DBHelper dbHelper = new DBHelper(this);
-        Cursor cursor = dbHelper.getUsers();
+        progressBar.setVisibility(View.VISIBLE);
+
         User user = null;
 
         cursor.moveToFirst();
         while(cursor.moveToNext()) {
-            if(email.getText().toString().equals(cursor.getString(1))
-                    && password.getText().toString().equals(cursor.getString(2))) {
+            if(email.getText().toString().equals(cursor.getString(UserInfo.EMAIL_COLUMN_NUMBER))
+                    && password.getText().toString().equals(cursor.getString(UserInfo.PASSWORD_COLUMN_NUMBER))) {
                 user = new User(
-                        cursor.getString(0),
-                        cursor.getString(1),
-                        cursor.getString(2)
+                        cursor.getString(UserInfo.FULL_NAME_COLUMN_NUMBER),
+                        cursor.getString(UserInfo.EMAIL_COLUMN_NUMBER),
+                        cursor.getString(UserInfo.PASSWORD_COLUMN_NUMBER)
                 );
                 break;
             }
@@ -60,9 +63,11 @@ public class LoginActivity extends AppCompatActivity {
 
         if(user != null) {
             Session.getInstance().setUser(user);
+            progressBar.setVisibility(View.GONE);
             Intent intent = new Intent(this, BrowseActivity.class);
             startActivity(intent);
         } else {
+            progressBar.setVisibility(View.GONE);
             Toast.makeText(LoginActivity.this, "Invalid email or password.", Toast.LENGTH_SHORT).show();
         }
 

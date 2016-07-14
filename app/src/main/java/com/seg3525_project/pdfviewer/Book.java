@@ -1,8 +1,6 @@
 package com.seg3525_project.pdfviewer;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.graphics.pdf.PdfDocument;
 
 import java.util.Date;
 
@@ -21,6 +19,7 @@ public class Book {
     private Date expiryDate;
     private String pdf;
 
+    //used when borrowing book
     public Book(String borrower, Bitmap image, String title, String author, String ISBN, String description, String pdf) {
         id = System.currentTimeMillis();
         this.borrower = borrower;
@@ -32,9 +31,10 @@ public class Book {
         this.pdf = pdf;
         expiryDate = new Date();
         //expiryDate.setTime(expiryDate.getTime() + 15 * 24 * 60 * 60 * 1000);
-        expiryDate.setTime(expiryDate.getTime() + 1000 * 60 * 60);
+        expiryDate.setTime(expiryDate.getTime() + 1000 * 60);
     }
 
+    // used when retrieving book from database
     public Book(long id, String borrower, Bitmap image, String title, String author, String ISBN, String description, String pdf, Date expiryDate) {
         this.id = id;
         this.borrower = borrower;
