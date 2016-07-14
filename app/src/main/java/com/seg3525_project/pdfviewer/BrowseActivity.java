@@ -87,6 +87,7 @@ public class BrowseActivity extends AppCompatActivity {
     public void goToBookInfoPage(View view) {
         Intent intent = new Intent(this, BookInfoActivity.class);
         startActivity(intent);
+        finish();
     }
 
 }
