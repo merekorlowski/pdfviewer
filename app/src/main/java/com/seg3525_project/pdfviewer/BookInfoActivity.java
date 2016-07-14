@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -79,6 +80,7 @@ public class BookInfoActivity extends AppCompatActivity {
                 User user = Session.getInstance().getUser();
                 book.setBorrower(user.getEmail());
                 user.addBookToCart(book);
+                Toast.makeText(BookInfoActivity.this, book.getTitle() + " added to cart.", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), CartActivity.class);
                 startActivity(intent);
             }
@@ -99,6 +101,7 @@ public class BookInfoActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.action_logOut:
                 Session.getInstance().setUser(null);
+                Toast.makeText(this, "Successfully logged out.", Toast.LENGTH_SHORT).show();
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;

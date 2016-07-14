@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -47,6 +48,7 @@ public class SearchResultsBookAdapter extends ArrayAdapter<Book> {
                 book.setBorrower(user.getEmail());
                 user.addBookToCart(book);
                 remove(book);
+                Toast.makeText(getContext(), book.getTitle() + " added to cart.", Toast.LENGTH_SHORT).show();
             }
 
         });

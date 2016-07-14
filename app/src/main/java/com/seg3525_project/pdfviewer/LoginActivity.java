@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         if(user != null) {
             Session.getInstance().setUser(user);
             progressBar.setVisibility(View.GONE);
+            Toast.makeText(LoginActivity.this, "Successfully logged in.", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, BrowseActivity.class);
             startActivity(intent);
         } else {

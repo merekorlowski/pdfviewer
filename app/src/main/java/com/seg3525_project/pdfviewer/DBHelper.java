@@ -38,7 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         Log.d("Database operations", "Database created");
 
-        /*addBook(new Book("nobody",
+       /*addBook(new Book("nobody",
                 ((BitmapDrawable) context.getResources().getDrawable(R.drawable.stats)).getBitmap(),
                 "Essentials of Probability & Statistics for Engineers & Scientists",
                 "Ronald E. Walpole",
@@ -52,7 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "Edward K. Blum & Alfred V. Aho",
                 "78-1-4614-1167-3",
                 "",
-                "http://publik.tuwien.ac.at/files/PubDat_201302.pdf"));*/
+                "http://publik.tuwien.ac.at/files/PubDat_201302.pdf"));//*/
 
     }
 
@@ -92,6 +92,17 @@ public class DBHelper extends SQLiteOpenHelper {
         };
 
         return sqLiteDatabase.query(UserInfo.TABLE_NAME, columns, null, null, null, null, null);
+    }
+
+    public Cursor getUser(String email) {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String[] columns = {
+                UserInfo.FULL_NAME,
+                UserInfo.EMAIL,
+                UserInfo.PASSWORD
+        };
+
+        return sqLiteDatabase.query(UserInfo.TABLE_NAME, columns, UserInfo.EMAIL + "=" + "'" + email + "'", null, null, null, null);
     }
 
     public int updateUser(User user) {
@@ -175,7 +186,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(BookInfo.PDF, book.getPdf());
         contentValues.put(BookInfo.EXPIRY_DATE, book.getExpiryDate().toString());
 
-        sqLiteDatabase.update(BookInfo.TABLE_NAME, contentValues, BookInfo.ID + " = " + book.getId(), null);
+        sqLiteDatabase.update(BookInfo.TABLE_NAME, contentValues, BookInfo.ID + "=" + book.getId(), null);
         Log.d("Database operations", "Book row updated");
     }
 }

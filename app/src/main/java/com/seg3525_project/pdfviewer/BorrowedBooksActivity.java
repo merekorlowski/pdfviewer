@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -85,6 +86,7 @@ public class BorrowedBooksActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.action_logOut:
                 Session.getInstance().setUser(null);
+                Toast.makeText(this, "Successfully logged out.", Toast.LENGTH_SHORT).show();
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;

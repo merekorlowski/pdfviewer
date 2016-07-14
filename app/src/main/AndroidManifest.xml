@@ -48,7 +48,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".BookInfoActivity"
-            android:label="Info"
+            android:label="Book morInfo"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".PDFActivity"

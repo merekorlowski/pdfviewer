@@ -37,7 +37,8 @@
                 android:drawableLeft="@drawable/abc_ic_search_api_material"
                 android:hint="Title, author, ISBN"
                 android:padding="5dp"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:singleLine="true" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"

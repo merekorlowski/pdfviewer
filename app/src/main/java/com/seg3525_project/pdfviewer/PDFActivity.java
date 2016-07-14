@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 public class PDFActivity extends AppCompatActivity {
 
@@ -27,8 +28,6 @@ public class PDFActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if(extras != null)
            URL = extras.getString("URL");
-
-        //String URL = "http://www.lssu.edu/blackboard/documents/SampleSyllabus.pdf";
 
         pdf = (WebView) findViewById(R.id.pdf);
         pdf.getSettings().setJavaScriptEnabled(true);
@@ -50,6 +49,7 @@ public class PDFActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.action_logOut:
                 Session.getInstance().setUser(null);
+                Toast.makeText(this, "Successfully logged out.", Toast.LENGTH_SHORT).show();
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;

@@ -69,7 +69,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                         password.getText().toString()
                 ));
 
-                Toast.makeText(CreateAccountActivity.this, "Account created.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateAccountActivity.this, "Successfully created account.", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, LoginActivity.class);
                 intent.putExtra("email", email.getText().toString());
                 intent.putExtra("password", password.getText().toString());

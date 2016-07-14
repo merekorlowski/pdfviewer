@@ -1,6 +1,7 @@
 package com.seg3525_project.pdfviewer;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -44,23 +45,17 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     }
 
     public void recoverPassword(View view) {
-        ArrayList<User> users = Library.getInstance().getUsers();
-        User user = null;
+        DBHelper dbHelper = new DBHelper(this);
+        Cursor cursor = dbHelper.getUser(email.getText().toString());
+        cursor.moveToFirst();
 
-        for(int i = 0; i < users.size(); i++) {
-            if(users.get(i).getEmail().equals(email.getText().toString())) {
-                user = users.get(i);
-                break;
-            }
-        }
-
-        if(user != null) {
+        if(cursor != null) {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
             intent.setData(Uri.parse("mailto:"));
-            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{user.getEmail()});
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{cursor.getString(TableInfo.UserInfo.EMAIL_COLUMN_NUMBER)});
             intent.putExtra(Intent.EXTRA_SUBJECT, "Just Used Textbooks - Password Recovery");
-            intent.putExtra(Intent.EXTRA_TEXT, "Your password is " + user.getPassword());
+            intent.putExtra(Intent.EXTRA_TEXT, "Your password is " + cursor.getString(TableInfo.UserInfo.PASSWORD_COLUMN_NUMBER));
 
             try {
                 startActivity(intent);

@@ -8,12 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,6 +55,25 @@ public class BrowseActivity extends AppCompatActivity {
                 search();
             }
         });
+        searchBar.setOnKeyListener(new View.OnKeyListener()
+        {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+                            search();
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
 
         /*searchBar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -90,6 +111,7 @@ public class BrowseActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.action_logOut:
                 Session.getInstance().setUser(null);
+                Toast.makeText(this, "Successfully logged out.", Toast.LENGTH_SHORT).show();
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;
@@ -115,9 +137,11 @@ public class BrowseActivity extends AppCompatActivity {
         String query = searchBar.getText().toString();
         displayedBooks.clear();
 
+        String email = Session.getInstance().getUser().getEmail();
+
         cursor.moveToFirst();
         do {
-            if(cursor.getString(BookInfo.BORROWER_COLUMN_NUMBER).equals("nobody")
+            if(!cursor.getString(BookInfo.BORROWER_COLUMN_NUMBER).equals(email)
                     && (cursor.getString(BookInfo.TITLE_COLUMN_NUMBER).contains(query)
                     || cursor.getString(BookInfo.AUTHOR_COLUMN_NUMBER).contains(query)
                     || cursor.getString(BookInfo.ISBN_COLUMN_NUMBER).contains(query))) {
