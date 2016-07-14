@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -44,6 +45,14 @@
         <activity
             android:name=".ForgotPasswordActivity"
             android:label="Password Recovery"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BookInfoActivity"
+            android:label="@string/title_activity_book_info"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PDFActivity"
+            android:label="@string/title_activity_pdf"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

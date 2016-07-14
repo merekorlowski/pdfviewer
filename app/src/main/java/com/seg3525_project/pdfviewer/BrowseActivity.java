@@ -1,20 +1,19 @@
 package com.seg3525_project.pdfviewer;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
+import android.database.Cursor;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Date;
+
+import com.seg3525_project.pdfviewer.TableInfo.BookInfo;
 
 public class BrowseActivity extends AppCompatActivity {
 
@@ -27,25 +26,41 @@ public class BrowseActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ArrayList<Book> books = new ArrayList<>();
+        DBHelper dbHelper = new DBHelper(this);
+        Cursor cursor = dbHelper.getBooks();
         ArrayList<Book> displayedBooks = new ArrayList<>();
 
-        if(books.size() == 0) {
-            books.add(new Book("nobody",
-                    ((BitmapDrawable) getResources().getDrawable(R.drawable.stats)).getBitmap(),
-                    "Essentials of Probability & Statistics for Engineers & Scientists",
-                    "Ronald E. Walpole",
-                    "0-321-78373-5",
-                    "",
-                    "/app/res/pdf/stats.pdf"));
-        }
 
-        for(int i = 0; i < books.size(); i++) {
-            if(books.get(i).getBorrower().equals("nobody"))
-                displayedBooks.add(books.get(i));
+        /*dbHelper.addBook(new Book("nobody",
+                ((BitmapDrawable) getResources().getDrawable(R.drawable.stats)).getBitmap(),
+                "Essentials of Probability & Statistics for Engineers & Scientists",
+                "Ronald E. Walpole",
+                "0-321-78373-5",
+                "",
+                "/app/res/pdf/stats.pdf"));*/
+
+        //dbHelper.deleteBook();
+
+        cursor.moveToFirst();
+        while(cursor.moveToNext()) {
+            if(cursor.getString(BookInfo.BORROWER_COLUMN_NUMBER).equals("nobody")) {
+                displayedBooks.add(new Book(
+                                cursor.getLong(BookInfo.ID_COLUMN_NUMBER),
+                                cursor.getString(BookInfo.BORROWER_COLUMN_NUMBER),
+                                BitmapUtility.getImage(cursor.getBlob(BookInfo.IMAGE_COLUMN_NUMBER)),
+                                cursor.getString(BookInfo.TITLE_COLUMN_NUMBER),
+                                cursor.getString(BookInfo.AUTHOR_COLUMN_NUMBER),
+                                cursor.getString(BookInfo.ISBN_COLUMN_NUMBER),
+                                cursor.getString(BookInfo.DESCRIPTION_COLUMN_NUMBER),
+                                cursor.getString(BookInfo.PDF_COLUMN_NUMBER),
+                                new Date(cursor.getString(BookInfo.EXPIRY_DATE_COLUMN_NUMBER))
+                        )
+                );
+            }
         }
 
         searchResults = (ListView) findViewById(R.id.searchResults);
+        searchResults.setEmptyView(findViewById(R.id.noResultsFound));
         searchResults.setAdapter(new SearchResultsBookAdapter(this, displayedBooks));
 
     }
@@ -84,10 +99,6 @@ public class BrowseActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void goToBookInfoPage(View view) {
-        Intent intent = new Intent(this, BookInfoActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
 }
+

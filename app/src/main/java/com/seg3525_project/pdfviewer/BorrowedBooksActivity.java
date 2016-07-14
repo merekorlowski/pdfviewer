@@ -69,7 +69,7 @@ public class BorrowedBooksActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);*/
 
-                Intent intent = new Intent(getApplicationContext(), BookActivity.class);
+                Intent intent = new Intent(getApplicationContext(), PDFActivity.class);
                 startActivity(intent);
 
             }

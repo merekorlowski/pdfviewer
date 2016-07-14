@@ -9,4 +9,6 @@
     <string name="title_activity_borrowed_books">BorrowedBooksActivity</string>
     <string name="title_activity_create_account">CreateAccountActivity</string>
     <string name="title_activity_forgot_password">ForgotPasswordActivity</string>
+    <string name="title_activity_book_info">BookInfoActivity</string>
+    <string name="title_activity_pdf">PDFActivity</string>
 </resources>

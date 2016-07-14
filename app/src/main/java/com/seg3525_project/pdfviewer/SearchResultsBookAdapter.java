@@ -1,6 +1,7 @@
 package com.seg3525_project.pdfviewer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,6 @@ public class SearchResultsBookAdapter extends ArrayAdapter<Book> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         final Book book = getItem(position);
-        final int index = position;
 
         if (convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.search_results_book, parent, false);
@@ -32,6 +32,7 @@ public class SearchResultsBookAdapter extends ArrayAdapter<Book> {
         TextView bookAuthor = (TextView) convertView.findViewById(R.id.bookAuthor);
         TextView bookISBN = (TextView) convertView.findViewById(R.id.bookISBN);
         ImageView addToCart = (ImageView) convertView.findViewById(R.id.addToCart);
+        TextView moreInfo = (TextView) convertView.findViewById(R.id.moreInfo);
 
         bookImage.setImageBitmap(book.getImage());
         bookTitle.setText(book.getTitle());
@@ -49,6 +50,17 @@ public class SearchResultsBookAdapter extends ArrayAdapter<Book> {
             }
 
         });
+
+        moreInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), BookInfoActivity.class);
+                intent.putExtra("bookIndex", book.getId());
+                getContext().startActivity(intent);
+            }
+        });
+
+
 
         return convertView;
     }
