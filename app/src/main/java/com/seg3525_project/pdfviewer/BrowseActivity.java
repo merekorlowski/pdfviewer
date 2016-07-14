@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -83,5 +84,9 @@ public class BrowseActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void goToBookInfoPage(View view) {
+        Intent intent = new Intent(this, BookInfoActivity.class);
+        startActivity(intent);
+    }
 
 }

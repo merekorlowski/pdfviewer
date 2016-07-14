@@ -71,7 +71,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="More info..."
                 android:id="@+id/moreInfo"
-                android:layout_gravity="right" />
+                android:layout_gravity="right"
+                android:onClick="goToBookInfoPage"/>
         </LinearLayout>
 
     </LinearLayout>

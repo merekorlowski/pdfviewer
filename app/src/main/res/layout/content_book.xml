@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/bookPage"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/stats_page"
+            android:background="@drawable/stats"
             android:layout_weight="1" />
 
     </LinearLayout>
