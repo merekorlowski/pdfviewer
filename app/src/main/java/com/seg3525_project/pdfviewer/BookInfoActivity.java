@@ -12,12 +12,21 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.Date;
 
 public class BookInfoActivity extends AppCompatActivity {
 
     private Book book;
+    private ImageView bookImage;
+    private TextView bookTitle;
+    private TextView bookAuthor;
+    private TextView bookISBN;
+    private TextView bookDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,33 +38,39 @@ public class BookInfoActivity extends AppCompatActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        bookImage = (ImageView) findViewById(R.id.bookImage);
+        bookTitle = (TextView) findViewById(R.id.bookTitle);
+        bookAuthor = (TextView) findViewById(R.id.bookAuthor);
+        bookISBN = (TextView) findViewById(R.id.bookISBN);
+        bookDescription = (TextView) findViewById(R.id.bookDescription);
+
         DBHelper dbHelper = new DBHelper(this);
-        Cursor cursor = dbHelper.getBooks();
-        long index = 0;
+        long id = 0;
 
         Bundle extras = getIntent().getExtras();
         if(extras != null)
-            index = extras.getLong("bookIndex");
+            id = extras.getLong("bookID");
 
-        Log.d("ID-1", "" + index);
+        Cursor cursor = dbHelper.getBook(id);
 
         cursor.moveToFirst();
-        while(cursor.moveToNext()) {
-            Log.d("ID-2", "" + cursor.getLong(TableInfo.BookInfo.ID_COLUMN_NUMBER));
-            if(cursor.getLong(TableInfo.BookInfo.ID_COLUMN_NUMBER) == index) {
-                book = new Book(
-                        cursor.getLong(TableInfo.BookInfo.ID_COLUMN_NUMBER),
-                        cursor.getString(TableInfo.BookInfo.BORROWER_COLUMN_NUMBER),
-                        BitmapUtility.getImage(cursor.getBlob(TableInfo.BookInfo.IMAGE_COLUMN_NUMBER)),
-                        cursor.getString(TableInfo.BookInfo.TITLE_COLUMN_NUMBER),
-                        cursor.getString(TableInfo.BookInfo.AUTHOR_COLUMN_NUMBER),
-                        cursor.getString(TableInfo.BookInfo.ISBN_COLUMN_NUMBER),
-                        cursor.getString(TableInfo.BookInfo.DESCRIPTION_COLUMN_NUMBER),
-                        cursor.getString(TableInfo.BookInfo.PDF_COLUMN_NUMBER),
-                        new Date(cursor.getString(TableInfo.BookInfo.EXPIRY_DATE_COLUMN_NUMBER))
-                );
-            }
-        }
+        book = new Book(
+                cursor.getLong(TableInfo.BookInfo.ID_COLUMN_NUMBER),
+                cursor.getString(TableInfo.BookInfo.BORROWER_COLUMN_NUMBER),
+                BitmapUtility.getImage(cursor.getBlob(TableInfo.BookInfo.IMAGE_COLUMN_NUMBER)),
+                cursor.getString(TableInfo.BookInfo.TITLE_COLUMN_NUMBER),
+                cursor.getString(TableInfo.BookInfo.AUTHOR_COLUMN_NUMBER),
+                cursor.getString(TableInfo.BookInfo.ISBN_COLUMN_NUMBER),
+                cursor.getString(TableInfo.BookInfo.DESCRIPTION_COLUMN_NUMBER),
+                cursor.getString(TableInfo.BookInfo.PDF_COLUMN_NUMBER),
+                new Date(cursor.getString(TableInfo.BookInfo.EXPIRY_DATE_COLUMN_NUMBER))
+        );
+
+        bookImage.setImageBitmap(book.getImage());
+        bookTitle.setText(book.getTitle());
+        bookAuthor.setText("by " + book.getAuthor());
+        bookISBN.setText("ISBN: " + book.getISBN());
+        bookDescription.setText(book.getDescription());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

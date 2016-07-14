@@ -6,8 +6,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -17,6 +22,11 @@ import com.seg3525_project.pdfviewer.TableInfo.BookInfo;
 
 public class BrowseActivity extends AppCompatActivity {
 
+    private DBHelper dbHelper;
+    private Cursor cursor;
+    private ArrayList<Book> displayedBooks;
+    private EditText searchBar;
+    private Button searchBtn;
     private ListView searchResults;
 
     @Override
@@ -26,40 +36,41 @@ public class BrowseActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DBHelper dbHelper = new DBHelper(this);
-        Cursor cursor = dbHelper.getBooks();
-        ArrayList<Book> displayedBooks = new ArrayList<>();
-
-
-        /*dbHelper.addBook(new Book("nobody",
-                ((BitmapDrawable) getResources().getDrawable(R.drawable.stats)).getBitmap(),
-                "Essentials of Probability & Statistics for Engineers & Scientists",
-                "Ronald E. Walpole",
-                "0-321-78373-5",
-                "",
-                "/app/res/pdf/stats.pdf"));*/
+        dbHelper = new DBHelper(this);
+        cursor = dbHelper.getBooks();
+        displayedBooks = new ArrayList<>();
+        searchBar = (EditText) findViewById(R.id.searchBar);
+        searchBtn = (Button) findViewById(R.id.searchBtn);
+        searchResults = (ListView) findViewById(R.id.searchResults);
 
         //dbHelper.deleteBook();
 
-        cursor.moveToFirst();
-        while(cursor.moveToNext()) {
-            if(cursor.getString(BookInfo.BORROWER_COLUMN_NUMBER).equals("nobody")) {
-                displayedBooks.add(new Book(
-                                cursor.getLong(BookInfo.ID_COLUMN_NUMBER),
-                                cursor.getString(BookInfo.BORROWER_COLUMN_NUMBER),
-                                BitmapUtility.getImage(cursor.getBlob(BookInfo.IMAGE_COLUMN_NUMBER)),
-                                cursor.getString(BookInfo.TITLE_COLUMN_NUMBER),
-                                cursor.getString(BookInfo.AUTHOR_COLUMN_NUMBER),
-                                cursor.getString(BookInfo.ISBN_COLUMN_NUMBER),
-                                cursor.getString(BookInfo.DESCRIPTION_COLUMN_NUMBER),
-                                cursor.getString(BookInfo.PDF_COLUMN_NUMBER),
-                                new Date(cursor.getString(BookInfo.EXPIRY_DATE_COLUMN_NUMBER))
-                        )
-                );
-            }
-        }
+        search();
 
-        searchResults = (ListView) findViewById(R.id.searchResults);
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                search();
+            }
+        });
+
+        /*searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                search();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });*/
+
         searchResults.setEmptyView(findViewById(R.id.noResultsFound));
         searchResults.setAdapter(new SearchResultsBookAdapter(this, displayedBooks));
 
@@ -97,6 +108,37 @@ public class BrowseActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void search() {
+
+        String query = searchBar.getText().toString();
+        displayedBooks.clear();
+
+        cursor.moveToFirst();
+        do {
+            if(cursor.getString(BookInfo.BORROWER_COLUMN_NUMBER).equals("nobody")
+                    && (cursor.getString(BookInfo.TITLE_COLUMN_NUMBER).contains(query)
+                    || cursor.getString(BookInfo.AUTHOR_COLUMN_NUMBER).contains(query)
+                    || cursor.getString(BookInfo.ISBN_COLUMN_NUMBER).contains(query))) {
+                displayedBooks.add(new Book(
+                                cursor.getLong(BookInfo.ID_COLUMN_NUMBER),
+                                cursor.getString(BookInfo.BORROWER_COLUMN_NUMBER),
+                                BitmapUtility.getImage(cursor.getBlob(BookInfo.IMAGE_COLUMN_NUMBER)),
+                                cursor.getString(BookInfo.TITLE_COLUMN_NUMBER),
+                                cursor.getString(BookInfo.AUTHOR_COLUMN_NUMBER),
+                                cursor.getString(BookInfo.ISBN_COLUMN_NUMBER),
+                                cursor.getString(BookInfo.DESCRIPTION_COLUMN_NUMBER),
+                                cursor.getString(BookInfo.PDF_COLUMN_NUMBER),
+                                new Date(cursor.getString(BookInfo.EXPIRY_DATE_COLUMN_NUMBER))
+                        )
+                );
+            }
+        } while(cursor.moveToNext());
+
+        searchResults.setAdapter(new SearchResultsBookAdapter(this, displayedBooks));
+
+
     }
 
 

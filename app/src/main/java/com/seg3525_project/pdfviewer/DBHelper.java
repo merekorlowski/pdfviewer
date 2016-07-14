@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 
 import com.seg3525_project.pdfviewer.TableInfo.*;
@@ -14,15 +15,15 @@ import com.seg3525_project.pdfviewer.TableInfo.*;
  */
 public class DBHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "pdfviewer.db";
-    public static final int DATABASE_VERSION = 2;
+    private static final String DATABASE_NAME = "pdfviewer.db";
+    private static final int DATABASE_VERSION = 2;
 
-    public String CREATE_USER_TABLE = "CREATE TABLE " + UserInfo.TABLE_NAME + "(" +
+    private String CREATE_USER_TABLE = "CREATE TABLE " + UserInfo.TABLE_NAME + "(" +
             UserInfo.FULL_NAME + " TEXT, " +
             UserInfo.EMAIL + " TEXT, " +
             UserInfo.PASSWORD + " TEXT);";
 
-    public String CREATE_BOOK_TABLE = "CREATE TABLE " + BookInfo.TABLE_NAME + "(" +
+    private String CREATE_BOOK_TABLE = "CREATE TABLE " + BookInfo.TABLE_NAME + "(" +
             BookInfo.ID + " LONG, " +
             BookInfo.BORROWER + " TEXT, " +
             BookInfo.IMAGE + " BLOB, " +
@@ -33,10 +34,26 @@ public class DBHelper extends SQLiteOpenHelper {
             BookInfo.PDF + " TEXT, " +
             BookInfo.EXPIRY_DATE + " TEXT);";
 
-
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         Log.d("Database operations", "Database created");
+
+        /*addBook(new Book("nobody",
+                ((BitmapDrawable) context.getResources().getDrawable(R.drawable.stats)).getBitmap(),
+                "Essentials of Probability & Statistics for Engineers & Scientists",
+                "Ronald E. Walpole",
+                "0-321-78373-5",
+                "",
+                "https://firdaramadhena.files.wordpress.com/2014/01/ronald_e_walpole__et_al_essentials_of_probability__statistics_for_engineers__scientists__2013.pdf"));
+
+        addBook(new Book("nobody",
+                ((BitmapDrawable) context.getResources().getDrawable(R.drawable.computer_science)).getBitmap(),
+                "Computer Science - The Hardware, Software and Heart of It",
+                "Edward K. Blum & Alfred V. Aho",
+                "78-1-4614-1167-3",
+                "",
+                "http://publik.tuwien.ac.at/files/PubDat_201302.pdf"));*/
+
     }
 
     @Override
@@ -126,6 +143,22 @@ public class DBHelper extends SQLiteOpenHelper {
         };
 
         return sqLiteDatabase.query(BookInfo.TABLE_NAME, columns, null, null, null, null, null);
+    }
+
+    public Cursor getBook(long id) {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String[] columns = {
+                BookInfo.ID,
+                BookInfo.BORROWER,
+                BookInfo.IMAGE,
+                BookInfo.TITLE,
+                BookInfo.AUTHOR,
+                BookInfo.ISBN,
+                BookInfo.DESCRIPTION,
+                BookInfo.PDF,
+                BookInfo.EXPIRY_DATE
+        };
+        return sqLiteDatabase.query(BookInfo.TABLE_NAME, columns, BookInfo.ID + "=" + id, null, null, null, null);
     }
 
     public void updateBook(Book book) {

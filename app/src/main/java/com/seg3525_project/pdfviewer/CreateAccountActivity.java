@@ -26,7 +26,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_account);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -56,10 +55,10 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         boolean exists = false;
 
-        while(cursor.moveToNext()) {
+        do {
             if(cursor.getString(UserInfo.EMAIL_COLUMN_NUMBER).equals(email.getText().toString()))
                 exists = true;
-        }
+        } while(cursor.moveToNext());
 
         if(validateFullName() && validateEmail() && validatePassword() && validateConfirmPassword()) {
             if(!exists) {

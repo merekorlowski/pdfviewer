@@ -55,12 +55,10 @@ public class SearchResultsBookAdapter extends ArrayAdapter<Book> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), BookInfoActivity.class);
-                intent.putExtra("bookIndex", book.getId());
+                intent.putExtra("bookID", book.getId());
                 getContext().startActivity(intent);
             }
         });
-
-
 
         return convertView;
     }

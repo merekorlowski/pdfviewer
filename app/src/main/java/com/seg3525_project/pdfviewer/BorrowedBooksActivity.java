@@ -34,7 +34,7 @@ public class BorrowedBooksActivity extends AppCompatActivity {
         String email = Session.getInstance().getUser().getEmail();
 
         cursor.moveToFirst();
-        while(cursor.moveToNext()) {
+        do {
             Date now = new Date();
             Date expiryDate = new Date(cursor.getString(BookInfo.EXPIRY_DATE_COLUMN_NUMBER));
 
@@ -52,7 +52,7 @@ public class BorrowedBooksActivity extends AppCompatActivity {
                         expiryDate
                 ));
             }
-        }
+        } while(cursor.moveToNext());
 
         borrowedBooks = (ListView) findViewById(R.id.borrowedBooks);
         borrowedBooks.setAdapter(new BorrowedBookAdapter(this, books));
@@ -62,14 +62,8 @@ public class BorrowedBooksActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Book book = books.get(position);
-
-                /*File file = new File(book.getPdf());
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.fromFile(file), "application/pdf");
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(intent);*/
-
                 Intent intent = new Intent(getApplicationContext(), PDFActivity.class);
+                intent.putExtra("URL", book.getPdf());
                 startActivity(intent);
 
             }

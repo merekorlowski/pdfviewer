@@ -21,15 +21,13 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#fff"
-            android:padding="20dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
 
             <ImageView
-                android:layout_width="190dp"
-                android:layout_height="300dp"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
                 android:id="@+id/bookImage"
                 android:layout_marginRight="10dp" />
 
@@ -43,125 +41,39 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Title:"
                     android:id="@+id/bookTitle"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="bookTitle"
-                    android:id="@+id/bookTitleInInfoActivity"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
+                    android:textSize="20dp" />
 
                 <TextView
-                    android:paddingTop="@dimen/activity_vertical_margin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Author:"
-                    android:id="@+id/authorName"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="authorName"
-                    android:id="@+id/authorNameInInfoActivity"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
+                    android:id="@+id/bookAuthor"
+                    android:layout_marginTop="5dp"
+                    android:textSize="17.5dp" />
 
                 <TextView
-                    android:paddingTop="@dimen/activity_vertical_margin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Edition:"
-                    android:id="@+id/bookEdition"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="bookEdition"
-                    android:id="@+id/bookEditionInfoActivity"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
-
-                <TextView
-                    android:paddingTop="@dimen/activity_vertical_margin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="ISBN:"
                     android:id="@+id/bookISBN"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="bookEdition"
-                    android:id="@+id/bookISBNInfoActivity"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
-
-                <TextView
-                    android:paddingTop="@dimen/activity_vertical_margin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Courses:"
-                    android:id="@+id/bookCourses"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="bookCourses"
-                    android:id="@+id/bookCoursesInfoActivity"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
+                    android:layout_marginTop="10dp"
+                    android:textSize="15dp"
+                    android:textStyle="italic" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#fff"
-            android:padding="20dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Synopsis:"
-                    android:id="@+id/bookSynopsis"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="bookSynopsis"
-                    android:id="@+id/bookSynopsisInInfoActivity"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Description"
+            android:id="@+id/bookDescription"
+            android:layout_marginTop="20dp"
+            android:textSize="20dp" />
 
     </LinearLayout>
 

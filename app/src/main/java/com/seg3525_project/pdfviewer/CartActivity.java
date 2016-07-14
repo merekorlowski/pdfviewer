@@ -65,21 +65,17 @@ public class CartActivity extends AppCompatActivity {
 
     public void borrowBooks(View view) {
         User user = Session.getInstance().getUser();
+        ArrayList<Book> booksInCart = user.getBooksInCart();
 
         DBHelper dbHelper = new DBHelper(this);
-        /*Cursor cursor = dbHelper.getBooks();
-
-        cursor.moveToFirst();
-        while(cursor.moveToNext()) {
-
-        }*/
 
         Date expiryDate = new Date();
         expiryDate.setTime(expiryDate.getTime() + 2 * 1000 * 60);
-        for(int i = 0; i < user.getBooksInCart().size(); i++) {
-            user.getBooksInCart().get(i).setBorrower(Session.getInstance().getUser().getEmail());
-            user.getBooksInCart().get(i).setExpiryDate(expiryDate);
-            dbHelper.addBook(user.getBooksInCart().get(i));
+        for(int i = 0, size = user.getBooksInCart().size(); i < size; i++) {
+            Book book = booksInCart.get(i);
+            book.setBorrower(user.getEmail());
+            book.setExpiryDate(expiryDate);
+            dbHelper.updateBook(book);
         }
 
         user.setBooksInCart(new ArrayList<Book>());

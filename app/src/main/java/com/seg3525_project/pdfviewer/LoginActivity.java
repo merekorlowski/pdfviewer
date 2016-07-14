@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         User user = null;
 
         cursor.moveToFirst();
-        while(cursor.moveToNext()) {
+        do {
             if(email.getText().toString().equals(cursor.getString(UserInfo.EMAIL_COLUMN_NUMBER))
                     && password.getText().toString().equals(cursor.getString(UserInfo.PASSWORD_COLUMN_NUMBER))) {
                 user = new User(
@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                 );
                 break;
             }
-        }
+        } while(cursor.moveToNext());
 
         if(user != null) {
             Session.getInstance().setUser(user);
