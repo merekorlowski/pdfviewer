@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:padding="20dp">
+
+            <ImageView
+                android:layout_width="190dp"
+                android:layout_height="300dp"
+                android:id="@+id/bookImage"
+                android:layout_marginRight="10dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Title:"
+                android:id="@+id/bookTitle"
+                android:ellipsize="end"
+                android:maxLines="1" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="bookTitle"
+                android:id="@+id/bookTitleInInfoActivity"
+                android:ellipsize="end"
+                android:maxLines="1" />
+
+                <TextView
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Author:"
+                    android:id="@+id/authorName"
+                    android:ellipsize="end"
+                    android:maxLines="1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="authorName"
+                    android:id="@+id/authorNameInInfoActivity"
+                    android:ellipsize="end"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Edition:"
+                    android:id="@+id/bookEdition"
+                    android:ellipsize="end"
+                    android:maxLines="1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="bookEdition"
+                    android:id="@+id/bookEditionInfoActivity"
+                    android:ellipsize="end"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="ISBN:"
+                    android:id="@+id/bookISBN"
+                    android:ellipsize="end"
+                    android:maxLines="1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="bookEdition"
+                    android:id="@+id/bookISBNInfoActivity"
+                    android:ellipsize="end"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Courses:"
+                    android:id="@+id/bookCourses"
+                    android:ellipsize="end"
+                    android:maxLines="1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="bookCourses"
+                    android:id="@+id/bookCoursesInfoActivity"
+                    android:ellipsize="end"
+                    android:maxLines="1" />
+
+        </LinearLayout>
+
+        </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Synopsis:"
+            android:id="@+id/bookSynopsis"
+            android:ellipsize="end"
+            android:maxLines="1" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="bookSynopsis"
+            android:id="@+id/bookSynopsisInInfoActivity"
+            android:ellipsize="end"
+            android:maxLines="1" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back to Results"
+            android:id="@+id/toResultsPage"
+            android:textColor="#fff"
+            android:background="@color/colorPrimary"
+            android:layout_weight="1"
+            android:onClick="viewPDF"
+            android:layout_marginTop="30dp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.8" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add To Cart"
+            android:id="@+id/addToCart"
+            android:textColor="#fff"
+            android:background="@color/colorPrimary"
+            android:layout_weight="1"
+            android:onClick="viewPDF"
+            android:layout_marginTop="30dp" />
+
+    </LinearLayout>
+</LinearLayout>
