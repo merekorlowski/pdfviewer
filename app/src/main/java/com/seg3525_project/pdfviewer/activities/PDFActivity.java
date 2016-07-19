@@ -1,32 +1,40 @@
-package com.seg3525_project.pdfviewer;
+package com.seg3525_project.pdfviewer.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
+import android.webkit.WebView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Date;
+import com.seg3525_project.pdfviewer.R;
+import com.seg3525_project.pdfviewer.models.Session;
 
-public class CartActivity extends AppCompatActivity {
+public class PDFActivity extends AppCompatActivity {
 
-    private ListView booksInCart;
+    private WebView pdf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
+        setContentView(R.layout.activity_pdf);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        booksInCart = (ListView) findViewById(R.id.booksInCart);
-        booksInCart.setEmptyView(findViewById(R.id.noBooksInCart));
-        booksInCart.setAdapter(new BookInCartAdapter(this, Session.getInstance().getUser().getBooksInCart()));
+        String URL = "";
+        Bundle extras = getIntent().getExtras();
+        if(extras != null)
+           URL = extras.getString("URL");
+
+        pdf = (WebView) findViewById(R.id.pdf);
+        pdf.getSettings().setJavaScriptEnabled(true);
+        pdf.loadUrl("https://docs.google.com/gview?embedded=true&url=" + URL);
 
     }
 
@@ -60,31 +68,12 @@ public class CartActivity extends AppCompatActivity {
                 intent = new Intent(this, CartActivity.class);
                 startActivity(intent);
                 return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-    public void borrowBooks(View view) {
-        User user = Session.getInstance().getUser();
-        ArrayList<Book> booksInCart = user.getBooksInCart();
-
-        DBHelper dbHelper = new DBHelper(this);
-
-        Date expiryDate = new Date();
-        expiryDate.setTime(expiryDate.getTime() + 15 * 24 * 60 * 60 * 1000);
-        for(int i = 0, size = user.getBooksInCart().size(); i < size; i++) {
-            Book book = booksInCart.get(i);
-            book.setBorrower(user.getEmail());
-            book.setExpiryDate(expiryDate);
-            dbHelper.updateBook(book);
-        }
-
-        Toast.makeText(this, booksInCart.size() + " books borrowed.", Toast.LENGTH_SHORT).show();
-        user.setBooksInCart(new ArrayList<Book>());
-        Intent intent = new Intent(this, BorrowedBooksActivity.class);
-        startActivity(intent);
-    }
-
 
 }

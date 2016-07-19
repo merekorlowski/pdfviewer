@@ -1,4 +1,4 @@
-package com.seg3525_project.pdfviewer;
+package com.seg3525_project.pdfviewer.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.seg3525_project.pdfviewer.models.Book;
+import com.seg3525_project.pdfviewer.R;
+import com.seg3525_project.pdfviewer.models.Session;
 
 import java.util.ArrayList;
 

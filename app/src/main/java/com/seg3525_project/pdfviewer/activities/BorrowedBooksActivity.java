@@ -1,4 +1,4 @@
-package com.seg3525_project.pdfviewer;
+package com.seg3525_project.pdfviewer.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,7 +15,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.seg3525_project.pdfviewer.TableInfo.BookInfo;
+import com.seg3525_project.pdfviewer.helpers.BitmapUtility;
+import com.seg3525_project.pdfviewer.models.Book;
+import com.seg3525_project.pdfviewer.adapters.BorrowedBookAdapter;
+import com.seg3525_project.pdfviewer.database.DBHelper;
+import com.seg3525_project.pdfviewer.R;
+import com.seg3525_project.pdfviewer.models.Session;
+import com.seg3525_project.pdfviewer.database.TableInfo.BookInfo;
 
 public class BorrowedBooksActivity extends AppCompatActivity {
 

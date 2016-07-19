@@ -1,13 +1,10 @@
-package com.seg3525_project.pdfviewer;
+package com.seg3525_project.pdfviewer.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +17,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.seg3525_project.pdfviewer.TableInfo.BookInfo;
+import com.seg3525_project.pdfviewer.helpers.BitmapUtility;
+import com.seg3525_project.pdfviewer.models.Book;
+import com.seg3525_project.pdfviewer.database.DBHelper;
+import com.seg3525_project.pdfviewer.R;
+import com.seg3525_project.pdfviewer.adapters.SearchResultsBookAdapter;
+import com.seg3525_project.pdfviewer.models.Session;
+import com.seg3525_project.pdfviewer.database.TableInfo.BookInfo;
 
 public class BrowseActivity extends AppCompatActivity {
 

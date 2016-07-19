@@ -1,4 +1,4 @@
-package com.seg3525_project.pdfviewer;
+package com.seg3525_project.pdfviewer.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.seg3525_project.pdfviewer.models.Book;
+import com.seg3525_project.pdfviewer.R;
+import com.seg3525_project.pdfviewer.models.Session;
+import com.seg3525_project.pdfviewer.models.User;
+import com.seg3525_project.pdfviewer.activities.BookInfoActivity;
 
 import java.util.ArrayList;
 

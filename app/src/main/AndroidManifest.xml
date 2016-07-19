@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:label="E-brary"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -23,35 +23,35 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BookActivity"
+            android:name=".activities.BookActivity"
             android:label="@string/title_activity_book"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".BrowseActivity"
+            android:name=".activities.BrowseActivity"
             android:label="Browse"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".CartActivity"
+            android:name=".activities.CartActivity"
             android:label="Cart"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".BorrowedBooksActivity"
+            android:name=".activities.BorrowedBooksActivity"
             android:label="Borrowed Books"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".CreateAccountActivity"
+            android:name=".activities.CreateAccountActivity"
             android:label="Create Account"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ForgotPasswordActivity"
+            android:name=".activities.ForgotPasswordActivity"
             android:label="Password Recovery"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".BookInfoActivity"
+            android:name=".activities.BookInfoActivity"
             android:label="Book Info"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".PDFActivity"
+            android:name=".activities.PDFActivity"
             android:label="Book"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

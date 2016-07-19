@@ -1,4 +1,4 @@
-package com.seg3525_project.pdfviewer;
+package com.seg3525_project.pdfviewer.models;
 
 import android.graphics.Bitmap;
 

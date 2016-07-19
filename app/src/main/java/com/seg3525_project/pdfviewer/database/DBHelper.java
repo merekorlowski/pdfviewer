@@ -1,14 +1,16 @@
-package com.seg3525_project.pdfviewer;
+package com.seg3525_project.pdfviewer.database;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 
-import com.seg3525_project.pdfviewer.TableInfo.*;
+import com.seg3525_project.pdfviewer.database.TableInfo.*;
+import com.seg3525_project.pdfviewer.helpers.BitmapUtility;
+import com.seg3525_project.pdfviewer.models.Book;
+import com.seg3525_project.pdfviewer.models.User;
 
 /**
  * Created by merek on 13/07/16.
@@ -33,6 +35,24 @@ public class DBHelper extends SQLiteOpenHelper {
             BookInfo.DESCRIPTION + " TEXT, " +
             BookInfo.PDF + " TEXT, " +
             BookInfo.EXPIRY_DATE + " TEXT);";
+
+    private String[] userColumns = {
+            UserInfo.FULL_NAME,
+            UserInfo.EMAIL,
+            UserInfo.PASSWORD
+    };
+
+    private String[] bookColumns = {
+            BookInfo.ID,
+            BookInfo.BORROWER,
+            BookInfo.IMAGE,
+            BookInfo.TITLE,
+            BookInfo.AUTHOR,
+            BookInfo.ISBN,
+            BookInfo.DESCRIPTION,
+            BookInfo.PDF,
+            BookInfo.EXPIRY_DATE
+    };
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -72,110 +92,64 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void addUser(User user) {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(UserInfo.FULL_NAME, user.getFullName());
-        contentValues.put(UserInfo.EMAIL, user.getEmail());
-        contentValues.put(UserInfo.PASSWORD, user.getPassword());
-
-        sqLiteDatabase.insert(UserInfo.TABLE_NAME, null, contentValues);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(UserInfo.TABLE_NAME, null, getUserContentValues(user));
         Log.d("Database operations", "User row inserted");
     }
 
     public Cursor getUsers() {
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        String[] columns = {
-                UserInfo.FULL_NAME,
-                UserInfo.EMAIL,
-                UserInfo.PASSWORD
-        };
-
-        return sqLiteDatabase.query(UserInfo.TABLE_NAME, columns, null, null, null, null, null);
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(UserInfo.TABLE_NAME, userColumns, null, null, null, null, null);
     }
 
     public Cursor getUser(String email) {
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        String[] columns = {
-                UserInfo.FULL_NAME,
-                UserInfo.EMAIL,
-                UserInfo.PASSWORD
-        };
-
-        return sqLiteDatabase.query(UserInfo.TABLE_NAME, columns, UserInfo.EMAIL + "=" + "'" + email + "'", null, null, null, null);
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(UserInfo.TABLE_NAME, userColumns, UserInfo.EMAIL + "=" + "'" + email + "'", null, null, null, null);
     }
 
     public int updateUser(User user) {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(UserInfo.FULL_NAME, user.getFullName());
-        contentValues.put(UserInfo.EMAIL, user.getEmail());
-        contentValues.put(UserInfo.PASSWORD, user.getPassword());
-
-        return sqLiteDatabase.update(UserInfo.TABLE_NAME, contentValues, UserInfo.EMAIL + " = ?",
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.update(UserInfo.TABLE_NAME, getUserContentValues(user), UserInfo.EMAIL + " = ?",
                 new String[]{String.valueOf(user.getEmail())});
     }
 
     public void addBook(Book book) {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(BookInfo.ID, book.getId());
-        contentValues.put(BookInfo.BORROWER, book.getBorrower());
-        contentValues.put(BookInfo.IMAGE, BitmapUtility.getBytes(book.getImage()));
-        contentValues.put(BookInfo.TITLE, book.getTitle());
-        contentValues.put(BookInfo.AUTHOR, book.getAuthor());
-        contentValues.put(BookInfo.ISBN, book.getISBN());
-        contentValues.put(BookInfo.DESCRIPTION, book.getDescription());
-        contentValues.put(BookInfo.PDF, book.getPdf());
-        contentValues.put(BookInfo.EXPIRY_DATE, book.getExpiryDate().toString());
-
-        sqLiteDatabase.insert(BookInfo.TABLE_NAME, null, contentValues);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(BookInfo.TABLE_NAME, null, getBookContentValues(book));
         Log.d("Database operations", "Book row inserted");
     }
 
-    public int deleteBook(/*long id*/) {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        return sqLiteDatabase.delete(BookInfo.TABLE_NAME, null/*BookInfo.ID + " = " + id*/, null);
+    public int deleteBook() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(BookInfo.TABLE_NAME, null, null);
     }
 
     public Cursor getBooks() {
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        String[] columns = {
-                BookInfo.ID,
-                BookInfo.BORROWER,
-                BookInfo.IMAGE,
-                BookInfo.TITLE,
-                BookInfo.AUTHOR,
-                BookInfo.ISBN,
-                BookInfo.DESCRIPTION,
-                BookInfo.PDF,
-                BookInfo.EXPIRY_DATE
-        };
-
-        return sqLiteDatabase.query(BookInfo.TABLE_NAME, columns, null, null, null, null, null);
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(BookInfo.TABLE_NAME, bookColumns, null, null, null, null, null);
     }
 
     public Cursor getBook(long id) {
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        String[] columns = {
-                BookInfo.ID,
-                BookInfo.BORROWER,
-                BookInfo.IMAGE,
-                BookInfo.TITLE,
-                BookInfo.AUTHOR,
-                BookInfo.ISBN,
-                BookInfo.DESCRIPTION,
-                BookInfo.PDF,
-                BookInfo.EXPIRY_DATE
-        };
-        return sqLiteDatabase.query(BookInfo.TABLE_NAME, columns, BookInfo.ID + "=" + id, null, null, null, null);
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(BookInfo.TABLE_NAME, bookColumns, BookInfo.ID + "=" + id, null, null, null, null);
     }
 
     public void updateBook(Book book) {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.update(BookInfo.TABLE_NAME, getBookContentValues(book), BookInfo.ID + "=" + book.getId(), null);
+        Log.d("Database operations", "Book row updated");
+    }
 
+    private ContentValues getUserContentValues(User user) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(UserInfo.FULL_NAME, user.getFullName());
+        contentValues.put(UserInfo.EMAIL, user.getEmail());
+        contentValues.put(UserInfo.PASSWORD, user.getPassword());
+        return contentValues;
+    }
+
+    private ContentValues getBookContentValues(Book book) {
+        ContentValues contentValues = new ContentValues();
         contentValues.put(BookInfo.ID, book.getId());
         contentValues.put(BookInfo.BORROWER, book.getBorrower());
         contentValues.put(BookInfo.IMAGE, BitmapUtility.getBytes(book.getImage()));
@@ -185,8 +159,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(BookInfo.DESCRIPTION, book.getDescription());
         contentValues.put(BookInfo.PDF, book.getPdf());
         contentValues.put(BookInfo.EXPIRY_DATE, book.getExpiryDate().toString());
-
-        sqLiteDatabase.update(BookInfo.TABLE_NAME, contentValues, BookInfo.ID + "=" + book.getId(), null);
-        Log.d("Database operations", "Book row updated");
+        return contentValues;
     }
+
 }

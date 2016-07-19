@@ -1,4 +1,4 @@
-package com.seg3525_project.pdfviewer;
+package com.seg3525_project.pdfviewer.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,7 +10,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.seg3525_project.pdfviewer.TableInfo.UserInfo;
+import com.seg3525_project.pdfviewer.database.DBHelper;
+import com.seg3525_project.pdfviewer.R;
+import com.seg3525_project.pdfviewer.models.Session;
+import com.seg3525_project.pdfviewer.database.TableInfo.UserInfo;
+import com.seg3525_project.pdfviewer.models.User;
 
 public class LoginActivity extends AppCompatActivity {
 

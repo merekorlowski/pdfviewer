@@ -1,4 +1,4 @@
-package com.seg3525_project.pdfviewer;
+package com.seg3525_project.pdfviewer.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,7 +12,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.seg3525_project.pdfviewer.database.DBHelper;
+import com.seg3525_project.pdfviewer.R;
+import com.seg3525_project.pdfviewer.database.TableInfo;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.seg3525_project.pdfviewer;
+package com.seg3525_project.pdfviewer.helpers;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

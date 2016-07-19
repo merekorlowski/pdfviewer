@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.seg3525_project.pdfviewer.BookActivity"
+    tools:context=".activities.BookActivity"
     tools:showIn="@layout/activity_book">
 
     <LinearLayout

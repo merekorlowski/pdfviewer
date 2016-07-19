@@ -1,4 +1,4 @@
-package com.seg3525_project.pdfviewer;
+package com.seg3525_project.pdfviewer.models;
 
 /**
  * Created by merek on 07/07/16.

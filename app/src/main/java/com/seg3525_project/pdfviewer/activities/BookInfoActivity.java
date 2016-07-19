@@ -1,14 +1,12 @@
-package com.seg3525_project.pdfviewer;
+package com.seg3525_project.pdfviewer.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +14,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.seg3525_project.pdfviewer.helpers.BitmapUtility;
+import com.seg3525_project.pdfviewer.models.Book;
+import com.seg3525_project.pdfviewer.database.DBHelper;
+import com.seg3525_project.pdfviewer.R;
+import com.seg3525_project.pdfviewer.models.Session;
+import com.seg3525_project.pdfviewer.database.TableInfo;
+import com.seg3525_project.pdfviewer.models.User;
 
 import java.util.Date;
 
