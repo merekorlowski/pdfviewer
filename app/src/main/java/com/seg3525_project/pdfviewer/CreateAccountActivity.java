@@ -81,7 +81,8 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     private boolean validateFullName() {
-        if(fullName.getText().toString() != null)
+        if(fullName.getText().toString() != null
+                && !fullName.getText().toString().equals(""))
             return true;
         else {
             fullName.setError("Must enter full name.");
@@ -104,7 +105,9 @@ public class CreateAccountActivity extends AppCompatActivity {
     private boolean validatePassword() {
         String passwordStr = password.getText().toString();
 
-        if(passwordStr.length() > 6 && passwordStr.length() < 12)
+        if(passwordStr.length() > 6 && passwordStr.length() < 12
+                && !passwordStr.equals("")
+                && passwordStr != null)
             return true;
         else {
             password.setError("Password must be between 6 and 12 characters.");
@@ -114,7 +117,9 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     private boolean validateConfirmPassword() {
-        if(password.getText().toString().matches(confirmPassword.getText().toString()))
+        if(password.getText().toString().matches(confirmPassword.getText().toString())
+                && !confirmPassword.getText().toString().equals("")
+                && confirmPassword.getText().toString() != null)
             return true;
         else {
             confirmPassword.setError("Does not match password.");

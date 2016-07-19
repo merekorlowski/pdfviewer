@@ -43,7 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "Essentials of Probability & Statistics for Engineers & Scientists",
                 "Ronald E. Walpole",
                 "0-321-78373-5",
-                "",
+                "This text covers the essential topics needed for a fundamental understanding of basic statistics and its applications in the fields of engineering and the sciences. Interesting, relevant applications use real data from actual studies, showing how the concepts and methods can be used to solve problems in the field. The authors assume one semester of differential and integral calculus as a prerequisite.",
                 "https://firdaramadhena.files.wordpress.com/2014/01/ronald_e_walpole__et_al_essentials_of_probability__statistics_for_engineers__scientists__2013.pdf"));
 
         addBook(new Book("nobody",

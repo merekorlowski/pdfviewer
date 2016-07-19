@@ -54,7 +54,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             intent.setType("text/plain");
             intent.setData(Uri.parse("mailto:"));
             intent.putExtra(Intent.EXTRA_EMAIL, new String[]{cursor.getString(TableInfo.UserInfo.EMAIL_COLUMN_NUMBER)});
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Just Used Textbooks - Password Recovery");
+            intent.putExtra(Intent.EXTRA_SUBJECT, "E-brary - Password Recovery");
             intent.putExtra(Intent.EXTRA_TEXT, "Your password is " + cursor.getString(TableInfo.UserInfo.PASSWORD_COLUMN_NUMBER));
 
             try {

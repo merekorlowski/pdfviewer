@@ -73,7 +73,7 @@
                 android:text="More info..."
                 android:id="@+id/moreInfo"
                 android:layout_gravity="right"
-                android:onClick="goToBookInfoPage"/>
+                android:textColor="@color/colorPrimary" />
         </LinearLayout>
 
     </LinearLayout>

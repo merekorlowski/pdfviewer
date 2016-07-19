@@ -9,12 +9,12 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="E-brary"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:label="@string/app_name"
+            android:label="E-brary"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,7 +48,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".BookInfoActivity"
-            android:label="Book morInfo"
+            android:label="Book Info"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".PDFActivity"
