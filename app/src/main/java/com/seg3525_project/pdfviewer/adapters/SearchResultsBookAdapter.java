@@ -22,6 +22,7 @@ import java.util.ArrayList;
  * Created by merek on 07/07/16.
  */
 public class SearchResultsBookAdapter extends ArrayAdapter<Book> {
+
     public SearchResultsBookAdapter(Context context, ArrayList<Book> books) {
         super(context, 0, books);
     }
@@ -51,7 +52,6 @@ public class SearchResultsBookAdapter extends ArrayAdapter<Book> {
             @Override
             public void onClick(View view) {
                 User user = Session.getInstance().getUser();
-                book.setBorrower(user.getEmail());
                 user.addBookToCart(book);
                 remove(book);
                 Toast.makeText(getContext(), book.getTitle() + " added to cart.", Toast.LENGTH_SHORT).show();

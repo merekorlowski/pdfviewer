@@ -18,6 +18,7 @@ import java.util.ArrayList;
  * Created by merek on 07/07/16.
  */
 public class BookInCartAdapter extends ArrayAdapter<Book> {
+
     public BookInCartAdapter(Context context, ArrayList<Book> books) {
         super(context, 0, books);
     }
@@ -53,7 +54,6 @@ public class BookInCartAdapter extends ArrayAdapter<Book> {
 
         return convertView;
     }
-
 
 }
 

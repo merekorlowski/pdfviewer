@@ -19,9 +19,6 @@ import java.util.ArrayList;
  */
 public class BorrowedBookAdapter extends ArrayAdapter<Book> {
 
-    private DbHelper dbHelper;
-    private Book book;
-
     public BorrowedBookAdapter(Context context, ArrayList<Book> books) {
         super(context, 0, books);
     }
@@ -29,8 +26,7 @@ public class BorrowedBookAdapter extends ArrayAdapter<Book> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        dbHelper = new DbHelper(getContext());
-        book = getItem(position);
+        final Book book = getItem(position);
 
         if (convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.borrowed_book, parent, false);
@@ -51,6 +47,7 @@ public class BorrowedBookAdapter extends ArrayAdapter<Book> {
         removeBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DbHelper dbHelper = new DbHelper(getContext());
                 book.setBorrower("nobody");
                 dbHelper.updateBook(book);
                 remove(book);
@@ -59,7 +56,6 @@ public class BorrowedBookAdapter extends ArrayAdapter<Book> {
 
         return convertView;
     }
-
 
 }
 
