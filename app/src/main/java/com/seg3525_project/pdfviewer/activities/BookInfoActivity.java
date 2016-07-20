@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.seg3525_project.pdfviewer.helpers.BitmapUtility;
 import com.seg3525_project.pdfviewer.models.Book;
-import com.seg3525_project.pdfviewer.database.DBHelper;
+import com.seg3525_project.pdfviewer.database.DbHelper;
 import com.seg3525_project.pdfviewer.R;
 import com.seg3525_project.pdfviewer.models.Session;
 import com.seg3525_project.pdfviewer.database.TableInfo;
@@ -49,7 +49,7 @@ public class BookInfoActivity extends AppCompatActivity {
         bookISBN = (TextView) findViewById(R.id.bookISBN);
         bookDescription = (TextView) findViewById(R.id.bookDescription);
 
-        DBHelper dbHelper = new DBHelper(this);
+        DbHelper dbHelper = new DbHelper(this);
         long id = 0;
 
         Bundle extras = getIntent().getExtras();
@@ -58,18 +58,19 @@ public class BookInfoActivity extends AppCompatActivity {
 
         Cursor cursor = dbHelper.getBook(id);
 
-        cursor.moveToFirst();
-        book = new Book(
-                cursor.getLong(TableInfo.BookInfo.ID_COLUMN_NUMBER),
-                cursor.getString(TableInfo.BookInfo.BORROWER_COLUMN_NUMBER),
-                BitmapUtility.getImage(cursor.getBlob(TableInfo.BookInfo.IMAGE_COLUMN_NUMBER)),
-                cursor.getString(TableInfo.BookInfo.TITLE_COLUMN_NUMBER),
-                cursor.getString(TableInfo.BookInfo.AUTHOR_COLUMN_NUMBER),
-                cursor.getString(TableInfo.BookInfo.ISBN_COLUMN_NUMBER),
-                cursor.getString(TableInfo.BookInfo.DESCRIPTION_COLUMN_NUMBER),
-                cursor.getString(TableInfo.BookInfo.PDF_COLUMN_NUMBER),
-                new Date(cursor.getString(TableInfo.BookInfo.EXPIRY_DATE_COLUMN_NUMBER))
-        );
+        if(cursor.moveToFirst()) {
+            book = new Book(
+                    cursor.getLong(TableInfo.BookInfo.ID_COLUMN_NUMBER),
+                    cursor.getString(TableInfo.BookInfo.BORROWER_COLUMN_NUMBER),
+                    BitmapUtility.getImage(cursor.getBlob(TableInfo.BookInfo.IMAGE_COLUMN_NUMBER)),
+                    cursor.getString(TableInfo.BookInfo.TITLE_COLUMN_NUMBER),
+                    cursor.getString(TableInfo.BookInfo.AUTHOR_COLUMN_NUMBER),
+                    cursor.getString(TableInfo.BookInfo.ISBN_COLUMN_NUMBER),
+                    cursor.getString(TableInfo.BookInfo.DESCRIPTION_COLUMN_NUMBER),
+                    cursor.getString(TableInfo.BookInfo.PDF_COLUMN_NUMBER),
+                    new Date(cursor.getString(TableInfo.BookInfo.EXPIRY_DATE_COLUMN_NUMBER))
+            );
+        }
 
         bookImage.setImageBitmap(book.getImage());
         bookTitle.setText(book.getTitle());

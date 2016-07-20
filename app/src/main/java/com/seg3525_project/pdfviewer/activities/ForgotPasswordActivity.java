@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.seg3525_project.pdfviewer.database.DBHelper;
+import com.seg3525_project.pdfviewer.database.DbHelper;
 import com.seg3525_project.pdfviewer.R;
 import com.seg3525_project.pdfviewer.database.TableInfo;
 
@@ -47,11 +47,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     }
 
     public void recoverPassword(View view) {
-        DBHelper dbHelper = new DBHelper(this);
+        DbHelper dbHelper = new DbHelper(this);
         Cursor cursor = dbHelper.getUser(email.getText().toString());
-        cursor.moveToFirst();
 
-        if(cursor != null) {
+        if(cursor.moveToFirst()) {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
             intent.setData(Uri.parse("mailto:"));

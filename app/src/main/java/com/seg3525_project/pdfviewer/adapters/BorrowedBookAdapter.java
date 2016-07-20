@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.seg3525_project.pdfviewer.models.Book;
-import com.seg3525_project.pdfviewer.database.DBHelper;
+import com.seg3525_project.pdfviewer.database.DbHelper;
 import com.seg3525_project.pdfviewer.R;
 
 import java.util.ArrayList;
@@ -19,7 +19,8 @@ import java.util.ArrayList;
  */
 public class BorrowedBookAdapter extends ArrayAdapter<Book> {
 
-    private DBHelper dbHelper;
+    private DbHelper dbHelper;
+    private Book book;
 
     public BorrowedBookAdapter(Context context, ArrayList<Book> books) {
         super(context, 0, books);
@@ -28,8 +29,8 @@ public class BorrowedBookAdapter extends ArrayAdapter<Book> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        final Book book = getItem(position);
-        dbHelper = new DBHelper(getContext());
+        dbHelper = new DbHelper(getContext());
+        book = getItem(position);
 
         if (convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.borrowed_book, parent, false);

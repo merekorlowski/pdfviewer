@@ -3,6 +3,7 @@ package com.seg3525_project.pdfviewer.activities;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,7 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.seg3525_project.pdfviewer.database.DBHelper;
+import com.seg3525_project.pdfviewer.database.DbHelper;
 import com.seg3525_project.pdfviewer.R;
 import com.seg3525_project.pdfviewer.database.TableInfo.UserInfo;
 import com.seg3525_project.pdfviewer.models.User;
@@ -52,16 +53,16 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     public void createAccount(View view) {
-        DBHelper dbHelper = new DBHelper(this);
+        DbHelper dbHelper = new DbHelper(this);
         Cursor cursor = dbHelper.getUsers();
-        cursor.moveToFirst();
 
         boolean exists = false;
-
-        do {
-            if(cursor.getString(UserInfo.EMAIL_COLUMN_NUMBER).equals(email.getText().toString()))
-                exists = true;
-        } while(cursor.moveToNext());
+        if(cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(UserInfo.EMAIL_COLUMN_NUMBER).equals(email.getText().toString()))
+                    exists = true;
+            } while (cursor.moveToNext());
+        }
 
         if(validateFullName() && validateEmail() && validatePassword() && validateConfirmPassword()) {
             if(!exists) {
@@ -84,8 +85,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     private boolean validateFullName() {
-        if(fullName.getText().toString() != null
-                && !fullName.getText().toString().equals(""))
+        if(!fullName.getText().toString().equals(""))
             return true;
         else {
             fullName.setError("Must enter full name.");
@@ -109,8 +109,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         String passwordStr = password.getText().toString();
 
         if(passwordStr.length() > 6 && passwordStr.length() < 12
-                && !passwordStr.equals("")
-                && passwordStr != null)
+                && !passwordStr.equals(""))
             return true;
         else {
             password.setError("Password must be between 6 and 12 characters.");
@@ -121,8 +120,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     private boolean validateConfirmPassword() {
         if(password.getText().toString().matches(confirmPassword.getText().toString())
-                && !confirmPassword.getText().toString().equals("")
-                && confirmPassword.getText().toString() != null)
+                && !confirmPassword.getText().toString().equals(""))
             return true;
         else {
             confirmPassword.setError("Does not match password.");

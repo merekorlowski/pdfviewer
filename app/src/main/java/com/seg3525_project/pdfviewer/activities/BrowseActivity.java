@@ -19,7 +19,7 @@ import java.util.Date;
 
 import com.seg3525_project.pdfviewer.helpers.BitmapUtility;
 import com.seg3525_project.pdfviewer.models.Book;
-import com.seg3525_project.pdfviewer.database.DBHelper;
+import com.seg3525_project.pdfviewer.database.DbHelper;
 import com.seg3525_project.pdfviewer.R;
 import com.seg3525_project.pdfviewer.adapters.SearchResultsBookAdapter;
 import com.seg3525_project.pdfviewer.models.Session;
@@ -27,7 +27,7 @@ import com.seg3525_project.pdfviewer.database.TableInfo.BookInfo;
 
 public class BrowseActivity extends AppCompatActivity {
 
-    private DBHelper dbHelper;
+    private DbHelper dbHelper;
     private Cursor cursor;
     private ArrayList<Book> displayedBooks;
     private EditText searchBar;
@@ -41,14 +41,12 @@ public class BrowseActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        dbHelper = new DBHelper(this);
+        dbHelper = new DbHelper(this);
         cursor = dbHelper.getBooks();
         displayedBooks = new ArrayList<>();
         searchBar = (EditText) findViewById(R.id.searchBar);
         searchBtn = (Button) findViewById(R.id.searchBtn);
         searchResults = (ListView) findViewById(R.id.searchResults);
-
-        //dbHelper.deleteBook();
 
         search();
 
@@ -142,26 +140,42 @@ public class BrowseActivity extends AppCompatActivity {
 
         String email = Session.getInstance().getUser().getEmail();
 
-        cursor.moveToFirst();
-        do {
-            if(!cursor.getString(BookInfo.BORROWER_COLUMN_NUMBER).equals(email)
-                    && (cursor.getString(BookInfo.TITLE_COLUMN_NUMBER).contains(query)
-                    || cursor.getString(BookInfo.AUTHOR_COLUMN_NUMBER).contains(query)
-                    || cursor.getString(BookInfo.ISBN_COLUMN_NUMBER).contains(query))) {
-                displayedBooks.add(new Book(
-                                cursor.getLong(BookInfo.ID_COLUMN_NUMBER),
-                                cursor.getString(BookInfo.BORROWER_COLUMN_NUMBER),
-                                BitmapUtility.getImage(cursor.getBlob(BookInfo.IMAGE_COLUMN_NUMBER)),
-                                cursor.getString(BookInfo.TITLE_COLUMN_NUMBER),
-                                cursor.getString(BookInfo.AUTHOR_COLUMN_NUMBER),
-                                cursor.getString(BookInfo.ISBN_COLUMN_NUMBER),
-                                cursor.getString(BookInfo.DESCRIPTION_COLUMN_NUMBER),
-                                cursor.getString(BookInfo.PDF_COLUMN_NUMBER),
-                                new Date(cursor.getString(BookInfo.EXPIRY_DATE_COLUMN_NUMBER))
-                        )
-                );
-            }
-        } while(cursor.moveToNext());
+        if(cursor.moveToFirst()) {
+            boolean matchesQuery = false;
+            boolean inCart = false;
+            do {
+                if (!cursor.getString(BookInfo.BORROWER_COLUMN_NUMBER).equals(email)
+                        && (cursor.getString(BookInfo.TITLE_COLUMN_NUMBER).contains(query)
+                        || cursor.getString(BookInfo.AUTHOR_COLUMN_NUMBER).contains(query)
+                        || cursor.getString(BookInfo.ISBN_COLUMN_NUMBER).contains(query))) {
+                    matchesQuery = true;
+                }
+
+                for(int i = 0; i < Session.getInstance().getUser().getBooksInCart().size(); i++) {
+                    if(cursor.getLong(BookInfo.ID_COLUMN_NUMBER) ==
+                            Session.getInstance().getUser().getBooksInCart().get(i).getId()) {
+                        inCart = true;
+                        break;
+                    }
+                }
+
+                if(matchesQuery && !inCart) {
+                    displayedBooks.add(new Book(
+                                    cursor.getLong(BookInfo.ID_COLUMN_NUMBER),
+                                    cursor.getString(BookInfo.BORROWER_COLUMN_NUMBER),
+                                    BitmapUtility.getImage(cursor.getBlob(BookInfo.IMAGE_COLUMN_NUMBER)),
+                                    cursor.getString(BookInfo.TITLE_COLUMN_NUMBER),
+                                    cursor.getString(BookInfo.AUTHOR_COLUMN_NUMBER),
+                                    cursor.getString(BookInfo.ISBN_COLUMN_NUMBER),
+                                    cursor.getString(BookInfo.DESCRIPTION_COLUMN_NUMBER),
+                                    cursor.getString(BookInfo.PDF_COLUMN_NUMBER),
+                                    new Date(cursor.getString(BookInfo.EXPIRY_DATE_COLUMN_NUMBER))
+                            )
+                    );
+                }
+
+            } while (cursor.moveToNext());
+        }
 
         searchResults.setAdapter(new SearchResultsBookAdapter(this, displayedBooks));
 

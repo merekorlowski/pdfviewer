@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.seg3525_project.pdfviewer.models.Book;
 import com.seg3525_project.pdfviewer.adapters.BookInCartAdapter;
-import com.seg3525_project.pdfviewer.database.DBHelper;
+import com.seg3525_project.pdfviewer.database.DbHelper;
 import com.seg3525_project.pdfviewer.R;
 import com.seg3525_project.pdfviewer.models.Session;
 import com.seg3525_project.pdfviewer.models.User;
@@ -76,7 +76,7 @@ public class CartActivity extends AppCompatActivity {
         User user = Session.getInstance().getUser();
         ArrayList<Book> booksInCart = user.getBooksInCart();
 
-        DBHelper dbHelper = new DBHelper(this);
+        DbHelper dbHelper = new DbHelper(this);
 
         Date expiryDate = new Date();
         expiryDate.setTime(expiryDate.getTime() + 15 * 24 * 60 * 60 * 1000);

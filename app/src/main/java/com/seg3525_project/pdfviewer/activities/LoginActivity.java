@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.seg3525_project.pdfviewer.database.DBHelper;
+import com.seg3525_project.pdfviewer.database.DbHelper;
 import com.seg3525_project.pdfviewer.R;
 import com.seg3525_project.pdfviewer.models.Session;
 import com.seg3525_project.pdfviewer.database.TableInfo.UserInfo;
@@ -18,7 +18,7 @@ import com.seg3525_project.pdfviewer.models.User;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private DBHelper dbHelper;
+    private DbHelper dbHelper;
     private Cursor cursor;
     private EditText email;
     private EditText password;
@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        dbHelper = new DBHelper(this);
+        dbHelper = new DbHelper(this);
         cursor = dbHelper.getUsers();
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
@@ -52,18 +52,19 @@ public class LoginActivity extends AppCompatActivity {
 
         User user = null;
 
-        cursor.moveToFirst();
-        do {
-            if(email.getText().toString().equals(cursor.getString(UserInfo.EMAIL_COLUMN_NUMBER))
-                    && password.getText().toString().equals(cursor.getString(UserInfo.PASSWORD_COLUMN_NUMBER))) {
-                user = new User(
-                        cursor.getString(UserInfo.FULL_NAME_COLUMN_NUMBER),
-                        cursor.getString(UserInfo.EMAIL_COLUMN_NUMBER),
-                        cursor.getString(UserInfo.PASSWORD_COLUMN_NUMBER)
-                );
-                break;
-            }
-        } while(cursor.moveToNext());
+        if(cursor.moveToFirst()) {
+            do {
+                if (email.getText().toString().equals(cursor.getString(UserInfo.EMAIL_COLUMN_NUMBER))
+                        && password.getText().toString().equals(cursor.getString(UserInfo.PASSWORD_COLUMN_NUMBER))) {
+                    user = new User(
+                            cursor.getString(UserInfo.FULL_NAME_COLUMN_NUMBER),
+                            cursor.getString(UserInfo.EMAIL_COLUMN_NUMBER),
+                            cursor.getString(UserInfo.PASSWORD_COLUMN_NUMBER)
+                    );
+                    break;
+                }
+            } while (cursor.moveToNext());
+        }
 
         if(user != null) {
             Session.getInstance().setUser(user);

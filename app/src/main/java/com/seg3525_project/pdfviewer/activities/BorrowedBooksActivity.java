@@ -18,7 +18,7 @@ import java.util.Date;
 import com.seg3525_project.pdfviewer.helpers.BitmapUtility;
 import com.seg3525_project.pdfviewer.models.Book;
 import com.seg3525_project.pdfviewer.adapters.BorrowedBookAdapter;
-import com.seg3525_project.pdfviewer.database.DBHelper;
+import com.seg3525_project.pdfviewer.database.DbHelper;
 import com.seg3525_project.pdfviewer.R;
 import com.seg3525_project.pdfviewer.models.Session;
 import com.seg3525_project.pdfviewer.database.TableInfo.BookInfo;
@@ -35,31 +35,32 @@ public class BorrowedBooksActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DBHelper dbHelper = new DBHelper(this);
+        DbHelper dbHelper = new DbHelper(this);
         Cursor cursor = dbHelper.getBooks();
         books = new ArrayList<>();
         String email = Session.getInstance().getUser().getEmail();
 
-        cursor.moveToFirst();
-        do {
-            Date now = new Date();
-            Date expiryDate = new Date(cursor.getString(BookInfo.EXPIRY_DATE_COLUMN_NUMBER));
+        if(cursor.moveToFirst()) {
+            do {
+                Date now = new Date();
+                Date expiryDate = new Date(cursor.getString(BookInfo.EXPIRY_DATE_COLUMN_NUMBER));
 
-            if(cursor.getString(BookInfo.BORROWER_COLUMN_NUMBER).equals(email)
-                    && now.before(expiryDate)) {
-                books.add(new Book(
-                        cursor.getLong(BookInfo.ID_COLUMN_NUMBER),
-                        cursor.getString(BookInfo.BORROWER_COLUMN_NUMBER),
-                        BitmapUtility.getImage(cursor.getBlob(BookInfo.IMAGE_COLUMN_NUMBER)),
-                        cursor.getString(BookInfo.TITLE_COLUMN_NUMBER),
-                        cursor.getString(BookInfo.AUTHOR_COLUMN_NUMBER),
-                        cursor.getString(BookInfo.ISBN_COLUMN_NUMBER),
-                        cursor.getString(BookInfo.DESCRIPTION_COLUMN_NUMBER),
-                        cursor.getString(BookInfo.PDF_COLUMN_NUMBER),
-                        expiryDate
-                ));
-            }
-        } while(cursor.moveToNext());
+                if (cursor.getString(BookInfo.BORROWER_COLUMN_NUMBER).equals(email)
+                        && now.before(expiryDate)) {
+                    books.add(new Book(
+                            cursor.getLong(BookInfo.ID_COLUMN_NUMBER),
+                            cursor.getString(BookInfo.BORROWER_COLUMN_NUMBER),
+                            BitmapUtility.getImage(cursor.getBlob(BookInfo.IMAGE_COLUMN_NUMBER)),
+                            cursor.getString(BookInfo.TITLE_COLUMN_NUMBER),
+                            cursor.getString(BookInfo.AUTHOR_COLUMN_NUMBER),
+                            cursor.getString(BookInfo.ISBN_COLUMN_NUMBER),
+                            cursor.getString(BookInfo.DESCRIPTION_COLUMN_NUMBER),
+                            cursor.getString(BookInfo.PDF_COLUMN_NUMBER),
+                            expiryDate
+                    ));
+                }
+            } while (cursor.moveToNext());
+        }
 
         borrowedBooks = (ListView) findViewById(R.id.borrowedBooks);
         borrowedBooks.setAdapter(new BorrowedBookAdapter(this, books));

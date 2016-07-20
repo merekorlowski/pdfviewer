@@ -15,8 +15,6 @@ import com.seg3525_project.pdfviewer.models.Session;
 
 public class PDFActivity extends AppCompatActivity {
 
-    private WebView pdf;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +30,7 @@ public class PDFActivity extends AppCompatActivity {
         if(extras != null)
            URL = extras.getString("URL");
 
-        pdf = (WebView) findViewById(R.id.pdf);
+        WebView pdf = (WebView) findViewById(R.id.pdf);
         pdf.getSettings().setJavaScriptEnabled(true);
         pdf.loadUrl("https://docs.google.com/gview?embedded=true&url=" + URL);
 

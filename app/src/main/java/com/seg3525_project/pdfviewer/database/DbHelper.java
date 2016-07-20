@@ -5,8 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 
+import com.seg3525_project.pdfviewer.R;
 import com.seg3525_project.pdfviewer.database.TableInfo.*;
 import com.seg3525_project.pdfviewer.helpers.BitmapUtility;
 import com.seg3525_project.pdfviewer.models.Book;
@@ -15,10 +17,10 @@ import com.seg3525_project.pdfviewer.models.User;
 /**
  * Created by merek on 13/07/16.
  */
-public class DBHelper extends SQLiteOpenHelper {
+public class DbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "pdfviewer.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     private String CREATE_USER_TABLE = "CREATE TABLE " + UserInfo.TABLE_NAME + "(" +
             UserInfo.FULL_NAME + " TEXT, " +
@@ -54,25 +56,28 @@ public class DBHelper extends SQLiteOpenHelper {
             BookInfo.EXPIRY_DATE
     };
 
-    public DBHelper(Context context) {
+    public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         Log.d("Database operations", "Database created");
 
-       /*addBook(new Book("nobody",
-                ((BitmapDrawable) context.getResources().getDrawable(R.drawable.stats)).getBitmap(),
-                "Essentials of Probability & Statistics for Engineers & Scientists",
-                "Ronald E. Walpole",
-                "0-321-78373-5",
-                "This text covers the essential topics needed for a fundamental understanding of basic statistics and its applications in the fields of engineering and the sciences. Interesting, relevant applications use real data from actual studies, showing how the concepts and methods can be used to solve problems in the field. The authors assume one semester of differential and integral calculus as a prerequisite.",
-                "https://firdaramadhena.files.wordpress.com/2014/01/ronald_e_walpole__et_al_essentials_of_probability__statistics_for_engineers__scientists__2013.pdf"));
+        Cursor cursor = getBooks();
+        if(!cursor.moveToFirst()) {
+            addBook(new Book("nobody",
+                    ((BitmapDrawable) context.getResources().getDrawable(R.drawable.stats)).getBitmap(),
+                    "Essentials of Probability & Statistics for Engineers & Scientists",
+                    "Ronald E. Walpole",
+                    "0-321-78373-5",
+                    "This text covers the essential topics needed for a fundamental understanding of basic statistics and its applications in the fields of engineering and the sciences. Interesting, relevant applications use real data from actual studies, showing how the concepts and methods can be used to solve problems in the field. The authors assume one semester of differential and integral calculus as a prerequisite.",
+                    "https://firdaramadhena.files.wordpress.com/2014/01/ronald_e_walpole__et_al_essentials_of_probability__statistics_for_engineers__scientists__2013.pdf"));
 
-        addBook(new Book("nobody",
-                ((BitmapDrawable) context.getResources().getDrawable(R.drawable.computer_science)).getBitmap(),
-                "Computer Science - The Hardware, Software and Heart of It",
-                "Edward K. Blum & Alfred V. Aho",
-                "78-1-4614-1167-3",
-                "",
-                "http://publik.tuwien.ac.at/files/PubDat_201302.pdf"));//*/
+            addBook(new Book("nobody",
+                    ((BitmapDrawable) context.getResources().getDrawable(R.drawable.computer_science)).getBitmap(),
+                    "Computer Science - The Hardware, Software and Heart of It",
+                    "Edward K. Blum & Alfred V. Aho",
+                    "78-1-4614-1167-3",
+                    "",
+                    "http://publik.tuwien.ac.at/files/PubDat_201302.pdf"));
+        }
 
     }
 
@@ -104,7 +109,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Cursor getUser(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(UserInfo.TABLE_NAME, userColumns, UserInfo.EMAIL + "=" + "'" + email + "'", null, null, null, null);
+        return db.query(UserInfo.TABLE_NAME, userColumns, UserInfo.EMAIL + "=" + email, null, null, null, null);
     }
 
     public int updateUser(User user) {
