@@ -100,7 +100,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         if(emailStr.endsWith("@uottawa.ca"))
             return true;
         else {
-            email.setError("Invalid email.");
+            email.setError("Invalid uOttawa email.");
             return false;
         }
     }
@@ -112,7 +112,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 && !passwordStr.equals(""))
             return true;
         else {
-            password.setError("Password must be between 6 and 12 characters.");
+            password.setError("Must be between 6 and 12 characters.");
             return false;
         }
 
